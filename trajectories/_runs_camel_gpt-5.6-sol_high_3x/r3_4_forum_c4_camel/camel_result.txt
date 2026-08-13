@@ -1,0 +1,28 @@
+Implemented the complete **alemhelp Forum / Q&A application** in the workspace.
+
+Included:
+
+- Five visually styled pages matching the supplied mockups
+- React + TypeScript frontend
+- Express backend API
+- PostgreSQL database with automatic schema and seed initialization
+- Exact required `data-testid` attributes
+- Authentication flow with the pre-created account
+- Question feed, open question thread, replies, navigation, and new-question form
+- Dockerfiles and health-checked `docker-compose.yml`
+- Complete README documentation
+
+Run with:
+
+```bash
+docker compose -p eval_c4_4_forum_camel up --build
+# then open http://localhost:38200
+```
+
+Pre-created account:
+
+- Username: `azakost`
+- Email: `admin@test.com`
+- Password: `Admin1234!`
+
+Cold-start, API login, all page routes, frontend build, and testid contract were verified successfully.

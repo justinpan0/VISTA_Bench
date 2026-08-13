@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_011739_3_job-board_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 740164,
+   "cached_tokens": 679379,
+   "hit_calls": 15,
+   "model_calls": 16,
+   "key": "camel-single-be11d3b1f36b5bd6adc1a7e1f0bbd5cf",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9179
+  },
+  "elapsed_s": 426.5,
+  "error": null,
+  "has_compose": true,
+  "n_files": 7043,
+  "result": "Implemented the complete JobHuntly full-stack application in the workspace.\n\nHighlights:\n- React 19 + TypeScript + Vite frontend\n- Express + PostgreSQL backend with JWT authentication\n- All 19 specified pages and dashboard routes\n- Exact required `data-testid` contract verified\n- Responsive public and dashboard layouts\n- Seeded applicant account and application data\n- Docker Compose configuration with health checks\n- Frontend exposed on `38000`, backend on `38001`\n- README with all required sections and route mapping\n- Frontend production build and static checks pass\n\nRun with:\n\n```bash\ndocker compose -p eval_c4_3_job_board_camel up --build\n# then open http://localhost:38000\n```\n\nPre-created account:\n\n```text\nadmin@test.com\nAdmin1234!\n```\n\nDocker runtime verification could not be completed locally because the Docker daemon was unavailable, but Compose configuration validation passed."
+ }
+}

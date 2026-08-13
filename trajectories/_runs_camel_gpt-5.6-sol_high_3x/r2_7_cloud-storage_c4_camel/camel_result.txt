@@ -1,0 +1,17 @@
+Implemented the complete Deupload cloud-storage application in the workspace.
+
+- 33 reachable pages
+- React/Vite frontend served by Nginx
+- Express backend with PostgreSQL
+- Seeded administrator account and file data
+- Exact required `data-testid` markers
+- Docker health checks and automatic database initialization
+- Frontend: http://localhost:38100
+- Backend: http://localhost:38101
+- Verified login and all documented page URLs return HTTP 200
+
+Run with:
+
+```bash
+docker compose -p eval_c4_7_cloud_storage_camel up --build
+```

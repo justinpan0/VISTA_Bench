@@ -1,0 +1,29 @@
+Implemented the complete Dreams Estate web application in the workspace.
+
+- React 19 + TypeScript frontend
+- Express backend with PostgreSQL
+- 14 specified page variants
+- Grid, list, and map listing views
+- Property and agent detail pages
+- Authentication and demo OAuth flows
+- Exact required `data-testid` markers
+- Seeded account and property data
+- Responsive styling and local image assets
+- Docker Compose orchestration with health checks
+- Complete README documentation
+
+Verified:
+
+- Frontend build succeeds
+- All documented URLs return HTTP 200
+- Backend health check passes
+- Seeded login works
+- Test ID contract matches exactly
+- Cold Docker build and startup succeeds
+
+Run with:
+
+```bash
+docker compose -p eval_c4_2_real_estate_camel up --build
+# then open http://localhost:38000
+```

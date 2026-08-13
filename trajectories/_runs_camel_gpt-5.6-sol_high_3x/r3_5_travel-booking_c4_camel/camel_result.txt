@@ -1,0 +1,26 @@
+Implemented the complete travel booking application in the workspace.
+
+Highlights:
+- React/Vite frontend matching all 8 supplied page mockups
+- Express/PostgreSQL backend
+- Functional reservations and custom package creation
+- JWT authentication with seeded account
+- Exact required `data-testid` contract
+- Responsive styling and bundled travel imagery
+- Docker Compose orchestration with health checks
+- Frontend: `http://localhost:38100`
+- Backend: `http://localhost:38101`
+- Complete README and environment documentation
+
+Run with:
+
+```bash
+docker compose -p eval_c4_5_travel_booking_camel up --build
+```
+
+Pre-created account:
+
+```text
+admin@test.com
+Admin1234!
+```

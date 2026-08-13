@@ -1,0 +1,24 @@
+Implemented the full-stack Deupload cloud-storage application with:
+
+- 33 routed pages matching the user, profile, file-browser, and admin sections
+- React/Vite frontend with responsive Deupload styling
+- Express backend with JWT authentication and role-aware APIs
+- PostgreSQL persistence with automatic schema initialization and seed data
+- Demo OAuth and payment integration modes
+- Exact required `data-testid` attributes
+- Docker Compose orchestration and health checks
+- Complete README with credentials, ports, endpoints, environment variables, and page mapping
+
+Run with:
+
+```bash
+docker compose -p eval_c4_7_cloud_storage_camel up --build
+# then open http://localhost:38000
+```
+
+Pre-created account:
+
+```text
+admin@test.com
+Admin1234!
+```

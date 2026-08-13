@@ -1,0 +1,29 @@
+Implemented the complete JobHuntly full-stack application in the workspace.
+
+Highlights:
+- React 19 + TypeScript + Vite frontend
+- Express + PostgreSQL backend with JWT authentication
+- All 19 specified pages and dashboard routes
+- Exact required `data-testid` contract verified
+- Responsive public and dashboard layouts
+- Seeded applicant account and application data
+- Docker Compose configuration with health checks
+- Frontend exposed on `38000`, backend on `38001`
+- README with all required sections and route mapping
+- Frontend production build and static checks pass
+
+Run with:
+
+```bash
+docker compose -p eval_c4_3_job_board_camel up --build
+# then open http://localhost:38000
+```
+
+Pre-created account:
+
+```text
+admin@test.com
+Admin1234!
+```
+
+Docker runtime verification could not be completed locally because the Docker daemon was unavailable, but Compose configuration validation passed.

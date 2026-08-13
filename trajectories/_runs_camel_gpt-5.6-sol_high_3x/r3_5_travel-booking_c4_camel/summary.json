@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_111425_r2_w1_5_travel-booking_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 1469374,
+   "cached_tokens": 1417955,
+   "hit_calls": 35,
+   "model_calls": 36,
+   "key": "camel-single-67fa563f11cc088db8d3b2b006d2dd6d",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.965
+  },
+  "elapsed_s": 390.6,
+  "error": null,
+  "has_compose": true,
+  "n_files": 2540,
+  "result": "Implemented the complete travel booking application in the workspace.\n\nHighlights:\n- React/Vite frontend matching all 8 supplied page mockups\n- Express/PostgreSQL backend\n- Functional reservations and custom package creation\n- JWT authentication with seeded account\n- Exact required `data-testid` contract\n- Responsive styling and bundled travel imagery\n- Docker Compose orchestration with health checks\n- Frontend: `http://localhost:38100`\n- Backend: `http://localhost:38101`\n- Complete README and environment documentation\n\nRun with:\n\n```bash\ndocker compose -p eval_c4_5_travel_booking_camel up --build\n```\n\nPre-created account:\n\n```text\nadmin@test.com\nAdmin1234!\n```"
+ }
+}

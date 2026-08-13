@@ -1,0 +1,22 @@
+Implemented the complete travel and tour booking application in the workspace.
+
+### Included
+
+- React + TypeScript frontend with all 8 specified page views
+- Express + TypeScript backend
+- PostgreSQL persistence and automatic schema initialization
+- Pre-created account: `admin@test.com` / `Admin1234!`
+- Functional reservation API and booking form
+- Responsive styling and bundled travel imagery
+- Exact required `data-testid` attributes
+- Dockerfiles and health-gated `docker-compose.yml`
+- Complete README documentation
+
+### Run
+
+```bash
+docker compose -p eval_c4_5_travel_booking_camel up --build
+# then open http://localhost:38000
+```
+
+Frontend production build, Compose configuration, backend TypeScript checks, and test ID contract were verified. Docker runtime startup could not be executed locally because the Docker daemon was unavailable.

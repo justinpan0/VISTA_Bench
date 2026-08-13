@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_111425_r1_w2_8_ecommerce_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 945308,
+   "cached_tokens": 894925,
+   "hit_calls": 25,
+   "model_calls": 26,
+   "key": "camel-single-4a61fc26484ac861099597d45b2d8b72",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9467
+  },
+  "elapsed_s": 452.8,
+  "error": null,
+  "has_compose": true,
+  "n_files": 1859,
+  "result": "Implemented the complete FASCO e-commerce application in the workspace.\n\n- 7 responsive pages matching the supplied storefront mockups\n- React + TypeScript + Vite frontend\n- Express + PostgreSQL backend\n- Authentication with pre-seeded account\n- Cart and demo checkout flows\n- Google OAuth 2.0 integration with graceful demo mode\n- Exact required `data-testid` attributes\n- Docker Compose orchestration and health checks\n- README with setup, credentials, ports, endpoints, environment variables, and page URLs\n- Verified frontend build, backend syntax, Compose configuration, test IDs, login, and HTTP 200 responses for every page\n\nRun:\n\n```bash\ndocker compose -p eval_c4_8_ecommerce_camel up --build\n# then open http://localhost:38200\n```"
+ }
+}

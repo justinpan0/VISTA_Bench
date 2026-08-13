@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_013635_5_travel-booking_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 3594366,
+   "cached_tokens": 3485535,
+   "hit_calls": 40,
+   "model_calls": 41,
+   "key": "camel-single-67fa563f11cc088db8d3b2b006d2dd6d",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9697
+  },
+  "elapsed_s": 541.1,
+  "error": null,
+  "has_compose": true,
+  "n_files": 8058,
+  "result": "Implemented the complete travel and tour booking application in the workspace.\n\n### Included\n\n- React + TypeScript frontend with all 8 specified page views\n- Express + TypeScript backend\n- PostgreSQL persistence and automatic schema initialization\n- Pre-created account: `admin@test.com` / `Admin1234!`\n- Functional reservation API and booking form\n- Responsive styling and bundled travel imagery\n- Exact required `data-testid` attributes\n- Dockerfiles and health-gated `docker-compose.yml`\n- Complete README documentation\n\n### Run\n\n```bash\ndocker compose -p eval_c4_5_travel_booking_camel up --build\n# then open http://localhost:38000\n```\n\nFrontend production build, Compose configuration, backend TypeScript checks, and test ID contract were verified. Docker runtime startup could not be executed locally because the Docker daemon was unavailable."
+ }
+}

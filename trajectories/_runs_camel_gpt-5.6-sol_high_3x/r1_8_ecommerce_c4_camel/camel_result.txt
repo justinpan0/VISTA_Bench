@@ -1,0 +1,25 @@
+Implemented the full FASCO e-commerce application in the workspace.
+
+### Included
+- Seven responsive pages matching the supplied storefront mockups
+- Interactive filters, product variants, cart quantities, discounts, checkout, authentication, and newsletter controls
+- Exact required `data-testid` attributes
+- React/Vite frontend served by Nginx
+- Express backend with JWT authentication and Google OAuth/demo mode
+- PostgreSQL database with automatic schema initialization and seeded account
+- Docker Compose configuration with required ports
+- Complete README and environment documentation
+
+### Run
+
+```bash
+docker compose -p eval_c4_8_ecommerce_camel up --build
+# then open http://localhost:38000
+```
+
+### Demo account
+
+- **Email:** `admin@test.com`
+- **Password:** `Admin1234!`
+
+Frontend production build, backend syntax, Compose configuration, and test-ID contract were validated. Docker cold-start execution could not be completed locally because the Docker daemon was unavailable.

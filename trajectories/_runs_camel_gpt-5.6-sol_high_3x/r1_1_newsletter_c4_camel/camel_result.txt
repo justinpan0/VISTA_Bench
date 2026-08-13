@@ -1,0 +1,25 @@
+Implemented the complete BlogSprout application in the workspace.
+
+### Included
+
+- 9 responsive publication pages matching the supplied mockups
+- React/Vite frontend served by Nginx
+- Express REST API
+- PostgreSQL database with automatic schema creation and seed data
+- Pre-created editor account
+- Newsletter subscription and contact endpoints
+- Exact required `data-testid` attributes
+- Docker Compose setup with health checks
+- Complete README documentation
+
+### Run
+
+```bash
+docker compose -p eval_c4_1_newsletter_camel up --build
+# then open http://localhost:38000
+```
+
+Frontend: `http://localhost:38000`  
+Backend: `http://localhost:38001`
+
+All nine page URLs return HTTP 200, the seeded account login was verified, and the frontend production build completed successfully.

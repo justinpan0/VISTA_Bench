@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_111425_r1_w2_6_chat_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 2775396,
+   "cached_tokens": 2667018,
+   "hit_calls": 32,
+   "model_calls": 33,
+   "key": "camel-single-a3514ccbbf525e1b9ae790e4cd90d7a3",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.961
+  },
+  "elapsed_s": 450.4,
+  "error": null,
+  "has_compose": true,
+  "n_files": 6626,
+  "result": "Implemented the complete DreamsChat full-stack application in the workspace.\n\n- React + TypeScript + Vite frontend\n- Express + PostgreSQL backend\n- Docker Compose orchestration\n- All 10 specified pages and exact `data-testid` contracts\n- Seeded login account: `admin` / `Admin1234!`\n- Frontend: http://localhost:38200\n- Backend: http://localhost:38201\n\nRun with:\n\n```bash\ndocker compose -p eval_c4_6_chat_camel up --build\n```"
+ }
+}

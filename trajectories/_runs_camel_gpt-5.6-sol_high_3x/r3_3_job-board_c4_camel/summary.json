@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_111425_r2_w1_3_job-board_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 1298302,
+   "cached_tokens": 1234064,
+   "hit_calls": 26,
+   "model_calls": 27,
+   "key": "camel-single-be11d3b1f36b5bd6adc1a7e1f0bbd5cf",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9505
+  },
+  "elapsed_s": 368.8,
+  "error": null,
+  "has_compose": true,
+  "n_files": 6518,
+  "result": "Implemented the complete JobHuntly job board application in the workspace.\n\n- React 19 + Vite frontend\n- Express backend with JWT authentication\n- PostgreSQL database with automatic schema initialization and seed data\n- All 19 page routes implemented\n- Required `data-testid` markers included and verified\n- Docker Compose configuration with health checks\n- Frontend exposed on `38100`\n- Backend exposed on `38101`\n- All documented routes return HTTP 200\n- Pre-created account login verified\n- Production frontend build verified\n\nRun with:\n\n```bash\ndocker compose -p eval_c4_3_job_board_camel up --build\n# then open http://localhost:38100\n```\n\nCredentials:\n\n```text\njakegyll@email.com\nAdmin1234!\n```"
+ }
+}

@@ -1,0 +1,31 @@
+Implemented the complete BlogSprout newsletter/blog application in the workspace.
+
+### Included
+
+- Nine responsive pages matching the supplied mockups
+- React 19, TypeScript, Vite, and Nginx frontend
+- Express and PostgreSQL backend
+- Seeded posts and exactly one admin account
+- Functional login, newsletter signup, search API, and contact submission
+- Exact required `data-testid` contract
+- Docker Compose deployment with health checks
+- Persistent database volume
+- README with all required sections
+- Locally bundled editorial imagery
+
+### Run
+
+```bash
+docker compose -p eval_c4_1_newsletter_camel up --build
+# then open http://localhost:38100
+```
+
+### Verified
+
+- Frontend build passes
+- Frontend returns HTTP 200
+- Backend health check returns HTTP 200
+- All nine page URLs return HTTP 200
+- Seeded credentials authenticate successfully
+- Required test IDs match exactly
+- PostgreSQL remains internal and is not host-exposed

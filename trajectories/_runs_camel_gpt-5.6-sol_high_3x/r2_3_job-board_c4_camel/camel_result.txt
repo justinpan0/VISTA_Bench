@@ -1,0 +1,22 @@
+Implemented and verified the complete JobHuntly application in the workspace.
+
+- Frontend: React + Vite + Nginx
+- Backend: Express
+- Database: PostgreSQL with automatic schema initialization and seed data
+- All 19 routes implemented
+- Exact required `data-testid` contract verified
+- Seeded applicant login verified
+- Cold Docker startup verified
+- Frontend and backend health checks pass
+
+Run:
+
+```bash
+docker compose -p eval_c4_3_job_board_camel up --build
+# then open http://localhost:38100
+```
+
+Pre-created account:
+
+- Email: `applicant@jobhuntly.test`
+- Password: `Applicant123!`

@@ -1,0 +1,28 @@
+Implemented the full **alemhelp Forum / Q&A** application in the workspace.
+
+Included:
+
+- React + TypeScript frontend with all 5 pages
+- FastAPI backend
+- PostgreSQL database with automatic schema and seed data
+- Exact required `data-testid` markers
+- Responsive visual styling matching the supplied mockups
+- Authentication endpoint and pre-created account
+- Question publishing and suggestion APIs
+- Dockerfiles and `docker-compose.yml`
+- Complete README documentation
+
+Run with:
+
+```bash
+docker compose -p eval_c4_4_forum_camel up --build
+# then open http://localhost:38000
+```
+
+Verified:
+
+- Frontend production build succeeds
+- Backend syntax is valid
+- Compose configuration is valid
+- Test ID contract matches exactly
+- All five routes return and render successfully

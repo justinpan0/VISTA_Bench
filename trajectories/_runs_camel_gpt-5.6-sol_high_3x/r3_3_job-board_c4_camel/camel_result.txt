@@ -1,0 +1,27 @@
+Implemented the complete JobHuntly job board application in the workspace.
+
+- React 19 + Vite frontend
+- Express backend with JWT authentication
+- PostgreSQL database with automatic schema initialization and seed data
+- All 19 page routes implemented
+- Required `data-testid` markers included and verified
+- Docker Compose configuration with health checks
+- Frontend exposed on `38100`
+- Backend exposed on `38101`
+- All documented routes return HTTP 200
+- Pre-created account login verified
+- Production frontend build verified
+
+Run with:
+
+```bash
+docker compose -p eval_c4_3_job_board_camel up --build
+# then open http://localhost:38100
+```
+
+Credentials:
+
+```text
+jakegyll@email.com
+Admin1234!
+```

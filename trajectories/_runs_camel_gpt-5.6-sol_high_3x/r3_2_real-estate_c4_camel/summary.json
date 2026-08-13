@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_111425_r2_w2_2_real-estate_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 1264964,
+   "cached_tokens": 1194010,
+   "hit_calls": 27,
+   "model_calls": 28,
+   "key": "camel-single-96fa5b7d89253898db0d3b444bfd7fb7",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9439
+  },
+  "elapsed_s": 443.4,
+  "error": null,
+  "has_compose": true,
+  "n_files": 6396,
+  "result": "Implemented and verified the Dreams Estate full-stack application.\n\n- React/Vite frontend with all 14 specified page views\n- Express/PostgreSQL backend with seeded authentication\n- Exact required `data-testid` contract\n- Responsive property, rental, map, detail, agent, and authentication layouts\n- Docker Compose startup with health checks and persistent database\n- Verified every documented URL returns HTTP 200\n- Verified seeded login:\n  - `admin@test.com`\n  - `Admin1234!`\n\nRun:\n\n```bash\ndocker compose -p eval_c4_2_real_estate_camel up --build\n# then open http://localhost:38200\n```"
+ }
+}

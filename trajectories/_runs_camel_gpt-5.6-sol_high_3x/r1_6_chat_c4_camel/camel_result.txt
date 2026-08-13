@@ -1,0 +1,21 @@
+Implemented the complete DreamsChat team chat application in the workspace.
+
+Included:
+
+- React/Vite frontend with all 10 specified pages
+- Express backend with authentication, messaging, and OAuth routes
+- PostgreSQL database with automatic schema initialization and seed data
+- Exact required `data-testid` markers
+- Responsive in-app shell, chat threads, call history, status viewer, and call modals
+- Dockerfiles and `docker-compose.yml`
+- Environment templates and comprehensive README
+- Pre-created account: `admin` / `Admin1234!`
+
+Run with:
+
+```bash
+docker compose -p eval_c4_6_chat_camel up --build
+# then open http://localhost:38000
+```
+
+Frontend production build, Compose configuration, and testid contract all pass. Docker runtime startup could not be executed because the local Docker daemon was unavailable.

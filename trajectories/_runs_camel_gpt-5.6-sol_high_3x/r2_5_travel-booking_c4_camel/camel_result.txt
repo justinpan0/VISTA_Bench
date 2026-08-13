@@ -1,0 +1,26 @@
+Implemented the complete Travel tour-booking application in the workspace.
+
+### Included
+- React 19 + TypeScript + Vite frontend
+- FastAPI backend
+- PostgreSQL persistence and automatic seed data
+- Responsive styling matching all eight supplied page mockups
+- Package detail tabs for Information, Tour Plan, Location, and Gallery
+- Functional reservation and login APIs
+- Exact required `data-testid` markers
+- Dockerfiles and Docker Compose orchestration
+- Complete README documentation
+
+### Run
+
+```bash
+docker compose -p eval_c4_5_travel_booking_camel up --build
+# then open http://localhost:38100
+```
+
+Verified:
+- All eight page URLs return HTTP 200
+- Backend and database health checks pass
+- Seeded account login succeeds
+- Reservation creation succeeds
+- Frontend production build completes successfully

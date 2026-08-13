@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_111425_r1_w2_10_streaming_music-streaming_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": true,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 851014,
+   "cached_tokens": 799495,
+   "hit_calls": 22,
+   "model_calls": 24,
+   "key": "camel-single-c004ac90c6368b378de6df9ecdc56ab5",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9395
+  },
+  "elapsed_s": 450.5,
+  "error": "JSONDecodeError: Unterminated string starting at: line 1 column 25 (char 24)",
+  "has_compose": true,
+  "n_files": 7554,
+  "result": ""
+ }
+}

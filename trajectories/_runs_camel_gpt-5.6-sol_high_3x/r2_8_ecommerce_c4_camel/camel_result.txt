@@ -1,0 +1,19 @@
+Implemented the complete FASCO e-commerce application in the workspace.
+
+- 7 responsive pages matching the supplied storefront mockups
+- React + TypeScript + Vite frontend
+- Express + PostgreSQL backend
+- Authentication with pre-seeded account
+- Cart and demo checkout flows
+- Google OAuth 2.0 integration with graceful demo mode
+- Exact required `data-testid` attributes
+- Docker Compose orchestration and health checks
+- README with setup, credentials, ports, endpoints, environment variables, and page URLs
+- Verified frontend build, backend syntax, Compose configuration, test IDs, login, and HTTP 200 responses for every page
+
+Run:
+
+```bash
+docker compose -p eval_c4_8_ecommerce_camel up --build
+# then open http://localhost:38200
+```

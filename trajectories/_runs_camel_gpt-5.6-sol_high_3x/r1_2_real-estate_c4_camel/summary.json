@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_010735_2_real-estate_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 1192595,
+   "cached_tokens": 1134632,
+   "hit_calls": 29,
+   "model_calls": 30,
+   "key": "camel-single-96fa5b7d89253898db0d3b444bfd7fb7",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9514
+  },
+  "elapsed_s": 599.0,
+  "error": null,
+  "has_compose": true,
+  "n_files": 1696,
+  "result": "Implemented the complete Dreams Estate web application in the workspace.\n\n- React 19 + TypeScript frontend\n- Express backend with PostgreSQL\n- 14 specified page variants\n- Grid, list, and map listing views\n- Property and agent detail pages\n- Authentication and demo OAuth flows\n- Exact required `data-testid` markers\n- Seeded account and property data\n- Responsive styling and local image assets\n- Docker Compose orchestration with health checks\n- Complete README documentation\n\nVerified:\n\n- Frontend build succeeds\n- All documented URLs return HTTP 200\n- Backend health check passes\n- Seeded login works\n- Test ID contract matches exactly\n- Cold Docker build and startup succeeds\n\nRun with:\n\n```bash\ndocker compose -p eval_c4_2_real_estate_camel up --build\n# then open http://localhost:38000\n```"
+ }
+}

@@ -1,0 +1,24 @@
+Implemented the complete DreamsChat application in the workspace.
+
+Highlights:
+- 10 responsive pages matching the supplied mockups
+- React + TypeScript frontend
+- Express + TypeScript backend
+- PostgreSQL persistence and automatic schema initialization
+- Seeded login account
+- Google/Facebook OAuth demo-mode flows
+- Exact required `data-testid` contract
+- Docker Compose orchestration with health checks
+- Verified frontend routes, backend health, authentication, builds, and database seed
+
+Run with:
+
+```bash
+docker compose -p eval_c4_6_chat_camel up --build
+# then open http://localhost:38200
+```
+
+Pre-created account:
+
+- Username: `admin`
+- Password: `Admin1234!`

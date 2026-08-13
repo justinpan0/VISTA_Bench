@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "task": "20260812_111425_r2_w2_8_ecommerce_c4_camel",
+  "model": "gpt-5.6-sol",
+  "cli": "camel",
+  "topology": "single",
+  "is_error": false,
+  "num_turns": 1,
+  "reasoning_effort": "high",
+  "prompt_cache": {
+   "input_tokens": 1202331,
+   "cached_tokens": 1159195,
+   "hit_calls": 34,
+   "model_calls": 35,
+   "key": "camel-single-4a61fc26484ac861099597d45b2d8b72",
+   "retention": "24h",
+   "verified_hit": true,
+   "hit_rate": 0.9641
+  },
+  "elapsed_s": 619.5,
+  "error": null,
+  "has_compose": true,
+  "n_files": 7039,
+  "result": "Implemented the complete FASCO e-commerce application in the workspace.\n\n### Included\n- 7 responsive pages matching the supplied layouts\n- React + TypeScript frontend\n- Express + TypeScript backend\n- PostgreSQL database with automatic initialization\n- Pre-created account and JWT authentication\n- Google OAuth 2.0 flow with placeholder demo mode\n- Interactive filters, product variants, quantity controls, cart calculations, discounts, and checkout\n- Exact required `data-testid` markers\n- Docker Compose deployment\n- Complete README documentation\n\n### Run\n\n```bash\ndocker compose -p eval_c4_8_ecommerce_camel up --build\n# then open http://localhost:38200\n```\n\n### Pre-created account\n\n- Email: `admin@test.com`\n- Password: `Admin1234!`\n\nFrontend and backend builds pass, all seven routes return HTTP 200, the database and backend health checks pass, and the seeded account was verified successfully."
+ }
+}

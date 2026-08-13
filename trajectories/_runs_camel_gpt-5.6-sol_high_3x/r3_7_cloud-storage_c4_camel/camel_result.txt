@@ -1,0 +1,29 @@
+Implemented the complete Deupload cloud storage application with:
+
+- 33 reachable pages matching the supplied layouts
+- React + Vite frontend
+- Express backend with JWT authentication
+- PostgreSQL database with automatic schema initialization and seed account
+- User file browser, profile settings, and admin panel
+- Exact required `data-testid` markers
+- Docker Compose deployment with health checks
+- Full README documentation
+
+Run with:
+
+```bash
+docker compose -p eval_c4_7_cloud_storage_camel up --build
+```
+
+Then open:
+
+```text
+http://localhost:38100
+```
+
+Pre-created account:
+
+- **Email:** `admin@test.com`
+- **Password:** `Admin1234!`
+
+Both frontend and backend health checks were verified successfully.

@@ -1,0 +1,19 @@
+Implemented and verified the complete **alemhelp Forum / Q&A application**.
+
+- Five responsive pages matching the supplied mockups
+- Exact required `data-testid` markers
+- SvelteKit frontend with reusable components
+- Python backend API
+- PostgreSQL database with automatic schema and seed
+- Pre-created account verified
+- Docker Compose health checks and service dependencies
+- All documented page URLs return HTTP 200
+- Frontend exposed on `38200`; backend on `38201`
+- README includes all required sections
+
+Start with:
+
+```bash
+docker compose -p eval_c4_4_forum_camel up --build
+# then open http://localhost:38200
+```

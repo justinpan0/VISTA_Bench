@@ -1,0 +1,15 @@
+Implemented the complete DreamsChat full-stack application in the workspace.
+
+- React + TypeScript + Vite frontend
+- Express + PostgreSQL backend
+- Docker Compose orchestration
+- All 10 specified pages and exact `data-testid` contracts
+- Seeded login account: `admin` / `Admin1234!`
+- Frontend: http://localhost:38200
+- Backend: http://localhost:38201
+
+Run with:
+
+```bash
+docker compose -p eval_c4_6_chat_camel up --build
+```
