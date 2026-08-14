@@ -14,7 +14,13 @@
 ## 🏆 Leaderboard — Combined Score (condition C4)
 
 <p align="center">
-  <img src="readme_assets/leaderboard.png" alt="VISTA C4 leaderboard" width="720">
+  <a href="https://vista-benchmark.org/">
+    <img src="https://img.shields.io/badge/VISTA_Live_Leaderboard-View_Latest_Rankings-c2410c?style=for-the-badge" alt="View the live VISTA Leaderboard">
+  </a>
+</p>
+
+<p align="center">
+  <strong><a href="https://vista-benchmark.org/">Explore the latest rankings, costs, speed, trajectories, and replays →</a></strong>
 </p>
 
 
