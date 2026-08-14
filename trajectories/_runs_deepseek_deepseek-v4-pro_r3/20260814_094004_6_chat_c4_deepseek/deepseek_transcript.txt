@@ -1,0 +1,40 @@
+The app is complete and verified. Here's a summary of what was built and confirmed.
+
+## What was built
+
+**Stack (documented in README):** React 18 + Vite + TypeScript frontend · FastAPI + SQLAlchemy backend · PostgreSQL 16 database · Docker Compose. A real three-service split: frontend `38000`, backend `38001`, DB internal-only.
+
+**All 10 pages implemented** (with exact `data-testid` contract):
+1. `/signup` — 2-col layout, violet illustration panel, `first-name`/`email`/`google`/`facebook`
+2. `/signin` — `username`/`passwd`/`google`/`facebook`
+3. `/success` — `navigate`
+4. `/chat` — app shell + Edward Lietz thread (text bubbles, reactions, audio waveform, file card, link preview, video bubble, typing indicators) + `chat`/`setting`/`profile`/`input`
+5. `/contacts` — alphabetical sections + call-history right pane
+6. `/groups` — 9 groups + The Dream Team thread (named messages, mention, 4-up image grid)
+7. `/status` — My/Recent/Seen + full-bleed sushi story viewer with `full-screen`
+8. `/calls` — All Calls list + call-history pane
+9. `/calls/video` — video-call modal with `end`/`more`
+10. `/chat/voice` — voice-call modal with `end`/`more`
+
+**Backend:** JWT auth (PBKDF2 password hashing), seeded `admin@test.com`/`Admin1234!`, OAuth endpoints that degrade to DEMO MODE with placeholder keys, and content endpoints serving all demo data. DB auto-inits schema + seed on first startup, persisted via named volume.
+
+## Verification results (all passing)
+
+| Check | Result |
+|-------|--------|
+| `tsc --noEmit && vite build` | ✅ clean |
+| Backend Python syntax (py 3.12) | ✅ |
+| Cold start `down -v && up --build` | ✅ 3/3 services healthy |
+| Frontend HTTP 200 on `:38000` | ✅ |
+| Login (correct/wrong password) | ✅ 200 / 401 |
+| All 10 page URLs | ✅ 200 each |
+| `/api` proxy through frontend | ✅ |
+| Testid `diff expected/actual` | ✅ exact match, no extras |
+
+The workspace is runnable with the single command from the README:
+```bash
+docker compose -p eval_c4_6_chat_deepseek up --build
+# then open http://localhost:38000
+```
+
+I left the stack torn down so the evaluator's own cold-start is pristine.

@@ -1,0 +1,33 @@
+The app is complete and fully verified. Here's a summary of what was built and confirmed working.
+
+## Stack (chosen in `c4` style)
+- **Frontend:** Next.js 14.2 (App Router, TypeScript, Tailwind CSS) — server-rendered, port **38000**
+- **Backend:** FastAPI + SQLAlchemy, port **38001**
+- **Database:** PostgreSQL 16 (internal only)
+- All orchestrated by a single `docker-compose.yml`
+
+## What was implemented
+- **9 pages** matching the mockup descriptions: Home, Single-post, Author, Category, Tag, Date, Search, About, Contact (+ a Login page).
+- **Data model + seed:** 10 authors, 14 categories, 21 tags, 29 posts, comments, subscribers — seeded automatically on first start from a named volume.
+- **Recurring components:** purple `#3328BF` brand, amber `#FFB200` accents, *Plus Jakarta Sans*, the "Stay Informed with Our Newsletter" CTA, "Follow Us" social grids, category tiles, PRO/FREE badges, pagination, ToC, galleries, awards, comment thread, and "Let's get to Work" footer CTA.
+- **API proxy routes** on the frontend (`/api/subscribe`, `/api/comments`, `/api/contact`, `/api/login`) so the browser stays same-origin (no hardcoded `localhost`; the server uses `http://backend:8000`).
+
+## Verification results (all pass)
+| Check | Result |
+|---|---|
+| Cold start `down -v && up --build` | ✅ frontend HTTP 200, backend healthy, DB auto-seeded (29 posts, 14 categories) |
+| Pre-created account `admin@test.com` / `Admin1234!` | ✅ logs in (curl + proxy), wrong password → 401 |
+| All 9 page URLs + login | ✅ 200 on `/`, `/post/…`, `/author/…`, `/category/nature`, `/tag/nature`, `/date/2024/10`, `/search?q=Travel`, `/about`, `/contact`, `/login` |
+| Testid contract (exact grep diff) | ✅ 13/13 match, `diff` exit 0 |
+| Per-page testid rendering | ✅ every anchor testid (`home`, `search`, `subscribe`, `title`, `login`, `submit`, `category-nature`, `contact-us`, `article`×N, `service`, `your-email`, `your-name`, `send-message`) present on its page |
+| Docker hard rules | ✅ no `container_name`, no `name:` on volumes/networks, DB not exposed, CORS allows `http://localhost:38000` |
+
+## Notes on fixed issues found during verification
+- A Next.js server-component event-handler error (`onError` on `<img>`) was fixed by making `PostImage` a client component.
+- A backend search bug (cross-join over-matching) was fixed by computing matching post IDs in a subquery before eager-loading.
+
+The workspace is runnable with the exact README command:
+```bash
+docker compose -p eval_c4_1_newsletter_deepseek up --build
+# open http://localhost:38000
+```

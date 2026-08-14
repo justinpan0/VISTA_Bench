@@ -1,0 +1,22 @@
+The task is complete. Here's a summary of what I built and verified.
+
+## Result
+
+A fully working **BlogSprout** newsletter/blog publication (9 pages), faithfully reproducing the Figma mockup's purple `#2C21BD` accent, `Plus Jakarta Sans` typography, and white/light-gray canvas.
+
+**Stack:** Next.js 14 (App Router, TypeScript, Tailwind) frontend + FastAPI/SQLAlchemy backend + PostgreSQL 16, orchestrated by a single `docker-compose.yml`.
+
+### What was built
+- **9 pages** — Home, Single-post, Author, Category, Tag, Date, Search, About, Contact — each with its named sections (hero + FREE ribbon, "Faces and Stories" 2×2 collage, quote block, "Explore Categories", 4-KPI stats panel, cinematic play-banner, newsletter, "Follow Us" grids, "Let's get to Work" CTA, table-of-contents right rail, comments + "Leave a Replay", awards list, contact form + map, etc.).
+- **Full data layer** — 11 authors, 15 categories, 19 tags, 24 posts with rich structured article bodies, 4 seeded comments; auto-created + seeded on first boot.
+- **Working features** — post listing with pagination, category/tag/date archives, full-text search, author profiles, and live subscribe/contact/comment forms (proxied through Next.js to the backend).
+- **Exact testid contract** — all 13 markers (`article`, `category-nature`, `contact-us`, `home`, `login`, `search`, `send-message`, `service`, `submit`, `subscribe`, `title`, `your-email`, `your-name`) render on the correct elements.
+
+### Verification (all passed)
+- `docker compose -p eval_c4_1_newsletter_deepseek up --build` cold start: db → backend → frontend all healthy.
+- All 9 page URLs return **HTTP 200** with correct content and testids.
+- `grep` diff between expected and actual testids is **clean** (no missing/extra).
+- Form POSTs, image serving, and backend `/api/health` all return 200.
+- README has every required section (Quick Start with the exact command, Pre-created Account, External API Keys → none/demo-mode, Ports, API Endpoints, Environment Variables, Pages table with concrete URLs).
+
+One environment note: this macOS Docker setup's buildx hit a sandbox write-permission error on `~/.docker/buildx`, so I built with the legacy builder (`DOCKER_BUILDKIT=0`) — the shipped images and `docker-compose.yml` are unaffected, and the documented command works as-is.

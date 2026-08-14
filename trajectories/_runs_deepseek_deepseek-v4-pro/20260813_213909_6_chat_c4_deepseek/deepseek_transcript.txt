@@ -1,0 +1,44 @@
+The **DreamsChat** team chat app is complete and verified end-to-end. Here's a summary of what was delivered.
+
+## Stack (chosen per the c4 "your call" rules)
+- **Frontend:** React 18 + Vite (SPA, nginx-served) + `react-router-dom` + `lucide-react` icons
+- **Backend:** Node.js + Express (JWT auth via `jsonwebtoken`, `bcryptjs`, `pg`)
+- **Database:** PostgreSQL 16 (schema + demo account auto-seeded on first boot, persisted in a named volume)
+- **Styling:** hand-written CSS design system (Archivo font, violet `#6c5ce7` primary, pastel avatars, doodle chat background)
+
+## What was built
+All 10 pages from the mockup, faithfully reproducing every named element:
+1. `/signup` — 2-column form + violet illustration panel
+2. `/signin` — shorter auth form
+3. `/success` — green-check success card
+4. `/chat` — 1:1 thread (reactions, audio message + waveform, "Ecommerce.zip" file card, typing indicator)
+5. `/contacts` — alphabetical contact sections + call history
+6. `/groups` — "The Dream Team" thread with 4-up image grid
+7. `/status` — WhatsApp-style status list + full-bleed story viewer
+8. `/calls` — call history list
+9. `/calls/video` — video-call modal over the Calls shell
+10. `/chat/voice` — voice-call modal over the Chat shell
+
+## Verification results (all pass)
+| Check | Result |
+|-------|--------|
+| Cold start `down -v && up --build` | ✅ frontend/backend/db all healthy |
+| Frontend HTTP 200 (port `38000`) | ✅ |
+| Backend health (port `38001`) | ✅ |
+| Pre-created login `admin@test.com` / `Admin1234!` | ✅ JWT + profile returned |
+| Testid contract (14 exact, no extras) | ✅ `diff` clean |
+| All 10 page URLs return 200 | ✅ |
+| DB internal only (no host port) | ✅ |
+| No `container_name` / `name:` in compose | ✅ |
+| CORS allows `http://localhost:38000` | ✅ |
+| No `localhost` hardcoded in frontend | ✅ (relative `/api` proxied via nginx) |
+
+## Run it
+```bash
+docker compose -p eval_c4_6_chat_deepseek up --build
+# then open http://localhost:38000
+```
+
+The app runs in **demo mode** by default — opening any in-app URL silently signs you in as the seeded account, so every page is reachable with zero manual steps; the explicit sign-in/sign-up forms and Google/Facebook buttons also work (social buttons complete a mock OAuth flow while the placeholder keys are in place).
+
+One note for transparency: the model in this run cannot ingest images, so visual reconstruction was driven by the detailed page descriptions plus the Figma structure JSONs (exact text, hierarchy, and bounding boxes), which together specified all layout, typography (Archivo), color intent (violet primary, white surfaces, pastel avatars, doodle background), and every named UI section.

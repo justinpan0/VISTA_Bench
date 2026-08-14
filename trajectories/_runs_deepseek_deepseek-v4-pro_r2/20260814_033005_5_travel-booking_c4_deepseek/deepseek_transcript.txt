@@ -1,0 +1,29 @@
+The task is complete. I built a fully working **Travel / Tour Booking** site and verified every requirement end-to-end.
+
+## What was built
+
+**Stack** (chosen to fit the content-heavy marketing + interactive-detail nature):
+- **Frontend** — Next.js 16 (App Router, TypeScript, server-rendered) in `frontend/`
+- **Backend** — Node.js 22 + Express REST API in `backend/`
+- **Database** — PostgreSQL 16 (schema + seed auto-run on first boot, named volume)
+- **Infra** — single `docker-compose.yml` (3 services, no `container_name`, no named volume/network)
+
+**Pages** (all 8, server-rendered with HTTP 200):
+| # | URL | Content |
+|---|---|---|
+| 1 | `/` | Hero + search bar, partner logos, services, romantic/resort/europe bands, explore tiles, trending grid, testimonial slider |
+| 2 | `/build` | Modal "Build Your Own Package" over the hero (destinations, dates, activities chips) |
+| 3 | `/about` | Script "About Us", kayaker, "Wanderlust" banner, radial progress chips, 4×3 international grid, testimonial |
+| 4 | `/packages` | "Travel With Us" ribbon, sticky sort toolbar, 6-card grid + "Plan Your Trip" filter, pagination |
+| 5–8 | `/packages/1?tab=…` | Detail page with Information / Tour Plan / Location / Gallery tabs + "Book This Tour" sidebar |
+
+## Verification results (all passing)
+- **Cold start** — `docker compose -p eval_c4_5_travel_booking_deepseek up --build` → all 8 URLs return `200`.
+- **API** — `/api/health` ok, 12 packages seeded (Switzerland=1, …), booking POST persists to Postgres, newsletter subscribe works.
+- **CORS** — preflight + POST confirm `Access-Control-Allow-Origin: http://localhost:38000`.
+- **Testid contract** — exact `diff` is empty (card, date, home, info, subscribe, touch, view-packages all present).
+- **Ports** — frontend `38000:3000`, backend `38001:8000`, DB internal only.
+
+The workspace is runnable with the single README command; I stopped my own containers afterward so the evaluator's cold start won't hit port conflicts.
+
+One note: the `read_image` tool couldn't render the PNGs (the runtime model doesn't accept image input), so visual reconstruction was driven by the Figma structure JSONs (exact text, fonts, bbox hierarchy) plus the description — the palette (orange `#FA7436` / navy `#181E4B`), Volkhov/Poppins/Manrope/Yesteryear type, and all named sections were reproduced faithfully, with self-contained SVG "scenic" placeholders replacing stock photos so the app renders identically offline in Docker.

@@ -1,0 +1,25 @@
+The Travel / Tour Booking site is complete and verified working. Here's the summary.
+
+## What I built
+
+**Stack** (chosen per the c4 variant's open choice): React 18 + TypeScript + Vite SPA served by Nginx → Express REST API → PostgreSQL 16, all orchestrated by a single `docker-compose.yml`.
+
+**Pages (8 = 5 routes + 3 tabs), all reproduced from the Figma structure/description:**
+1. `/` — hero + search bar, partner logos, "We Offer Best Services", romantic-tropical band, resort-bookings promo, Europe sightseeing (kayak + Ireland/London/Paris tiles), Explore Nature/Cities, trending 3-up grid, testimonial slider
+2. `/build-package` — centered modal over the home hero (close ×, destination fields, "+ Add destination", date/guests row, 20 activity chips, "Add Package")
+3. `/about` — script "About Us" hero, intro + circular kayaker, *Wanderlust* banner, 3 radial progress chips (78/55/30%), 4×3 international grid, newsletter footer
+4. `/packages` — "Travel With Us" ribbon, sticky sort bar, 3×2 package grid, sticky "Plan Your Trip" filter + luggage illustration, pagination
+5–8. `/packages/1?tab=…` — detail page with Information / Tour Plan (5-day accordion) / Location (styled map) / Gallery (asymmetric mosaic) tabs + "Book This Tour" sidebar
+
+**Key behaviors:** reservations/newsletter/contact/build-package POST to the backend and persist in Postgres; DB auto-inits schema + seeds 8 packages on first `up --build` (named volume, internal only).
+
+## Verification (all passed)
+- **Cold start**: `docker compose -p eval_c4_5_travel_booking_deepseek down -v && up --build` → all 3 services **healthy**
+- **HTTP**: frontend `200` on `:38000` (including all 8 deep-link URLs via SPA fallback), backend healthy on `:38001`
+- **CORS**: preflight + POST from `Origin: http://localhost:38000` return the correct allow-origin header
+- **Testid contract**: `diff` of expected vs actual is **exact** — `card, date, home, info, subscribe, touch, view-packages`
+- **Type-check**: `tsc --noEmit` clean; `vite build` succeeds; 57 self-contained SVG image assets generated (no runtime network needed; fonts self-hosted via Fontsource)
+
+## Notes
+- No login is required by the task (documented in README), and there are **no third-party API keys**, so nothing runs in "demo mode" — all flows are real end-to-end.
+- Local-only note: in this sandbox, `~/.docker` writes are blocked, so I used `DOCKER_BUILDKIT=0` for my verification; the compose file/Dockerfiles themselves are standard and build with the default builder in a normal environment.

@@ -1,0 +1,20 @@
+The JobHuntly job board is complete and fully verified. Here's a summary of what was built and confirmed.
+
+## Stack chosen (documented in README)
+- **Frontend:** Next.js 14 (App Router) + TypeScript + Tailwind CSS 3, built with `output: "standalone"`.
+- **Backend:** Node.js + Express + PostgreSQL (`pg`) with JWT auth (`jsonwebtoken`/`bcryptjs`).
+- **Database:** PostgreSQL 16 (internal Docker service, no host exposure), auto-init schema + seed on first boot, persisted via a named volume.
+
+## What was delivered
+- **All 19 pages** (8 public + 11 dashboard routes) at distinct URLs, faithfully reproducing the JobHuntly mockups: violet `#4640DE` primary, white surfaces, soft `#F8F8FD` backgrounds, brand-logo company cards, left icon-and-label dashboard nav, and every named section (partner strip, category tiles, "Start posting jobs" CTA, featured/latest jobs, filters, recommended/companies-by-category, job detail with responsibilities/perks/about-this-role, company profile with team/perks/open-jobs, auth split-screens, dashboard KPIs + donut, threaded messages, applications table + tabs, editable profile, 3-tab settings, help FAQ).
+- **Exact testid contract** — all 18 markers (`findjob`, `signup`, `jobcard`, `companycard`, `subscribe`, `google`, `continue`, `login`, `dashboard`, `profile`, `back-home`, `bell`, `application`, `input`, `profilecard`, `upload`, `changepw`, `updateemail`) verified via the required grep diff (no diff).
+- **Auth** — pre-seeded account `jakegyll@email.com` / `Password123!` logs in via API and browser; login/signup forms call the backend (demo-mode fallback included).
+
+## Verification results
+- `docker compose -p eval_c4_3_job_board_deepseek up --build` → cold-start OK; frontend HTTP **200**, backend `/api/health` OK.
+- Full `down -v` → `up --build` cycle passed (fresh seed, all healthy).
+- Login endpoint returns a valid JWT + user.
+- All **19 page URLs return HTTP 200** with correct content and rendered testids.
+- No third-party keys required — Google sign-in is a labeled demo/mock.
+
+The workspace runs with the exact README quick-start command and opens at `http://localhost:38000`.

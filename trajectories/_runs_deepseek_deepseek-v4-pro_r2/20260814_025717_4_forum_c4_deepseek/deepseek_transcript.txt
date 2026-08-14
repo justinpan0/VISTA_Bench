@@ -1,0 +1,34 @@
+The app is complete and fully verified. Here's what I built and confirmed.
+
+## Stack
+- **Frontend** — SvelteKit 2 (SSR, `@sveltejs/adapter-node`), bundling Roboto via `@fontsource/roboto`
+- **Backend** — FastAPI + SQLAlchemy 2 (Python 3.11)
+- **Database** — PostgreSQL 16 (internal Docker service, named volume, auto-seeded on first boot)
+
+## Pages (all render the mockup faithfully)
+| # | Route | Highlights |
+|---|-------|-----------|
+| 1 | `/register` | Split-screen auth, 4 inputs with inline check/x-circle icons, "Email already registered!", peach REGISTER CTA |
+| 2 | `/login` | "We've missed you!" form, masked password + "Wrong password!", orange Login CTA |
+| 3 | `/` | 3-column dashboard — sidebar (Search/MENU/PERSONAL NAVIGATOR/socials), pill filter tabs, 4 question cards, Must-read + Featured links rails |
+| 4 | `/questions/1` | Full post w/ syntax-highlighted code, Save button, "Suggestions" composer + threaded answers (votes/reply/hide), author profile card |
+| 5 | `/questions/new` | Category dropdown, title input, tall textarea, Add Image / disabled Save-as-draft / orange Publish CTA |
+
+Plus functional `/tags` and `/ranking` views linked from the sidebar.
+
+## Verification results (all pass)
+- **Cold start** `docker compose -p eval_c4_4_forum_deepseek up --build` → all 7 URLs return **HTTP 200**; db + backend report **healthy**
+- **Login** `azakost` / `Admin1234!` → token + user via `POST /api/auth/login`; wrong password → 401
+- **Threaded data** — 4 seeded questions, nested replies (@morgenshtern→@unkind), code blocks, votes
+- **Testid contract** — `diff` of expected vs. actual = **no diff** (username, passwd, register, login, profile, search, likes, like, card, suggest, publish)
+- **Ports** — frontend `38000:3000`, backend `38001:8000`, db internal only; CORS allows `http://localhost:38000`
+
+Two non-obvious issues I caught and fixed during live testing:
+1. **SvelteKit CSRF** — form actions need `ORIGIN=http://localhost:38000` set in the container, otherwise the browser login form 403s (adapter-node defaults protocol to `https`).
+2. **FastAPI auth** — `authorization` was being parsed as a query param; switched to `Header(None)` so `Authorization: Bearer` is read correctly (voting, answering, and publishing all confirmed working).
+
+The only runtime command needed is the README quick-start:
+```bash
+docker compose -p eval_c4_4_forum_deepseek up --build
+# then open http://localhost:38000
+```

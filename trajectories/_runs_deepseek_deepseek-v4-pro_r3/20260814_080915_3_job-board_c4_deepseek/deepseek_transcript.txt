@@ -1,0 +1,25 @@
+The JobHuntly job board is complete and verified. Here's a summary of what was built and confirmed.
+
+## Result
+
+A two-sided job board (public marketing site + authenticated applicant dashboard) reproducing the **JobHuntly** Figma mockups, with all 19 pages.
+
+**Stack** (documented in README): Next.js 14 (App Router + Tailwind) frontend · FastAPI + SQLAlchemy backend · PostgreSQL 16 (internal Docker service) · JWT + bcrypt auth.
+
+**Architecture**
+- `backend/` — FastAPI REST API with seed data, two-role auth, faceted filtering, the application state machine (In Review / Shortlisted / Offered / Interviewing / Unsuitable / Hired / Declined), threaded messages, and profile/settings persistence.
+- `frontend/` — 19 routes across public pages (landing, jobs, companies, job detail, company profile, signup/login) and an authenticated dashboard shell (home, messages, applications, find-jobs, companies, profile, 3 settings tabs, help).
+- `docker-compose.yml` — db (internal) + backend (`38001:8000`) + frontend (`38000:3000`), healthchecks gating the backend on DB-ready and the frontend on backend-ready, named volume for persistence.
+
+## Verification results (all passing)
+
+1. **Stack consistency** — framework configs reflect the chosen stack; README documents it.
+2. **Cold start** — `docker compose -p eval_c4_3_job_board_deepseek down -v && up --build` → frontend HTTP 200.
+3. **Pre-created account logs in** — `jakegyll@email.com / Admin1234!` (job seeker, powers the mockup) and `admin@test.com / Admin1234!` (employer) both return JWTs via `POST /auth/login`.
+4. **Demo mode** — Google sign-in degrades gracefully; no third-party keys needed.
+5. **Visual audit** — every named section (category tiles, promo card with counters, filters, star/skill chips, donut chart, perks grid, team row, portfolio cards, FAQ cards, message panes, etc.) is implemented; the palette (`#4640DE` violet, `#F8F8FC` background, `#202430` text) was sampled from the PNGs.
+6. **Testid contract** — `diff /tmp/expected /tmp/actual` clean; all 18 unique testids (`findjob`, `signup`, `jobcard`, `companycard`, `subscribe`, `google`, `continue`, `login`, `dashboard`, `profile`, `back-home`, `bell`, `application`, `input`, `profilecard`, `upload`, `changepw`, `updateemail`) present exactly.
+7. **All 19 pages reachable** — every URL returns HTTP 200, and every detail page is linked from a list/grid.
+8. **README `## Pages` table** — accurate; each row maps to its working route.
+
+The workspace is runnable with the single command `docker compose -p eval_c4_3_job_board_deepseek up --build` → open http://localhost:38000.

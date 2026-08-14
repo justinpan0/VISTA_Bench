@@ -1,0 +1,26 @@
+The full-stack **Deupload** cloud-storage app is built and verified end-to-end. Here's the summary.
+
+## Stack chosen (documented in README)
+- **Frontend** — Next.js 14 (App Router + TypeScript, `output: standalone`), hand-written CSS design system with the self-hosted **Lexend** variable font (no runtime CDN dependency).
+- **Backend** — Node.js + Express, JWT auth (`bcryptjs` + `jsonwebtoken`), CORS.
+- **Database** — PostgreSQL 16, schema + seed auto-init on first boot, persisted via a named volume.
+
+## What was built
+- All **33 pages**: 3 unauth (`/`, `/register`, `/login`), 5 file-browser views (`/files` list + `?view=grid`, `/photos`, `/folders`, `/transfer`), 10 profile sub-pages (`/profile/*`), 15 admin sub-pages (`/admin/*`).
+- Shared app shell: thin left icon rail, secondary sidebar (files taxonomy / profile sub-nav / admin groups), top toolbar, and right detail rail on file views — matching the violet `#651FFF` / cyan `#00E5FF` palette extracted from the mockups.
+- Real auth: email-first flow (`email-check` → login/register), two-role authorization, and two seeded accounts.
+
+## Verification results (all pass)
+1. **Testid contract** — `diff` of expected vs actual is **clean** (12 testids: `email`, `full-name`, `create`, `login`, `google`, `apple`, `home`, `dashboard`, `profile`, `privacy`, `payments`, `ins`).
+2. **Cold start** — `docker compose -p eval_c4_7_cloud_storage_deepseek down -v && up --build` succeeds; backend health `{"ok":true,"db":"up"}`.
+3. **Pre-created accounts** — `admin@test.com`/`Admin1234!` (admin) and `long@conikal.com`/`LongHa123!` (user) both return a JWT via `POST /auth/login` (fresh seed confirmed).
+4. **All 33 page URLs return HTTP 200**, and key content (`Patrick Federi`, `Total Users`, `Account Settings`, `Uploading 24 files`, `14.26GB`, `Tiếng Việt`, `Conikal LLC`, …) renders in the SSR HTML.
+5. **Docker hard rules** — frontend `38000:3000`, backend `38001:8000`, DB internal-only, no `container_name`, no `name:` on volumes/networks, CORS allows `http://localhost:38000`.
+
+The workspace is runnable with the exact documented command:
+```bash
+docker compose -p eval_c4_7_cloud_storage_deepseek up --build
+# then open http://localhost:38000
+```
+
+Note: on this dev host I had to set `BUILDX_CONFIG` to a workspace-local dir because the DSH file sandbox blocks Docker's buildx activity writes under `~/.docker`; that's a local-environment workaround only — the shipped `docker-compose.yml` and README use the standard command and need no such flag on a normal host.

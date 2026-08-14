@@ -1,0 +1,31 @@
+The app is complete and fully verified. Here's a summary of what I built.
+
+## Stack chosen (documented in README)
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18 + Vite (SPA), served by **nginx** |
+| Routing | react-router-dom (client-side) |
+| Charts | Hand-rolled SVG donut + line charts |
+| Backend | Node.js + **Express** |
+| Database | **PostgreSQL 16** (seeded on first start) |
+
+I picked this because the task is a heavily interactive dashboard with 10 views sharing one shell and one normalized data set — a classic React SPA + REST/Postgres fit, with nginx doing the `/api` reverse proxy so the frontend never hardcodes `localhost`.
+
+## What was built
+
+- **10 pages + modal + bonus Settings page** — Login, Dashboard, Tasks list, Projects grid, Project details, Profile, Kanban board, WorkLog timeline, Performance report, and the task-detail modal (opens on `/tasks?task=1234` or by clicking a task row).
+- **Shared shell** with icon-rail navigation + top utility bar, carrying the shared testids (`profile`, `project`, `task`, `setting`).
+- **All named elements** from the description/Figma JSON: donut + line charts, status chips (Completed/Live/High/Cancelled), timers, avatar stacks, carousels, kanban columns with "+ Add card", timeline with connecting line, notifications, worked-with grid, thumbnails, pagination, breadcrumbs, etc.
+- **Postgres seed** (1 user, 6 projects, 17 tasks, worklogs, notifications, contributors) via `init.sql`, auto-loaded on first `up --build`, persisted in a named volume.
+
+## Verification (all passing)
+
+- ✅ `docker compose -p eval_c4_9_project_management_deepseek up --build` cold start → frontend **200** on `:38000`, backend healthy on `:38001`, DB `up`.
+- ✅ Pre-seeded account `admin@test.com` / `Admin1234!` logs in (200 + token); wrong password → 401.
+- ✅ Every page URL returns 200; data endpoints return seeded rows from Postgres.
+- ✅ CORS allows `http://localhost:38000`.
+- ✅ Testid contract exact — all 11 markers (`card, close, eamil, input, login, passwd, profile, project, setting, task, view-all`) present and diff-clean.
+- ✅ No `container_name`, no `name:` on volumes/networks, DB not exposed, ports 38000/38001 as required.
+
+**Note:** One quirk in my sandbox — Docker BuildKit couldn't write its activity file outside the workspace (a sandbox policy), so I built/verified with the legacy builder (`DOCKER_BUILDKIT=0`). The committed `Dockerfile`s and `docker-compose.yml` are standard and BuildKit-compatible, so the evaluator's plain `up --build` will work normally.

@@ -1,0 +1,28 @@
+The app is complete and verified. Here's a summary of what I built and confirmed.
+
+## Stack (my call for the c4 variant)
+
+| Layer | Choice |
+|---|---|
+| Frontend | React 18 + TypeScript + Vite + Tailwind CSS, served by nginx |
+| Backend | FastAPI (Python 3.11) + SQLAlchemy |
+| Database | PostgreSQL 16 (internal service, named volume) |
+| Auth | JWT email/password + OAuth 2.0 (Facebook/Google **demo mode**) |
+
+The frontend is a static SPA that calls the backend through a relative `/api/*` path proxied by nginx to the `backend` service — no `localhost` is hardcoded anywhere.
+
+## What was implemented
+
+- **14 pages** across auth (`/sign-in`, `/sign-up`), home (`/`), buy (`/buy` with `?view=grid|list|map`), buy detail (`/buy/10`), rent equivalents (`/rent`, `/rent/10`), and agents (`/agents`, `?view=list`, `/agents/9`).
+- **All named UI elements**: mega-nav header, breadcrumb band, faceted filter rail, sort/price/view toggles, 3×3 grids, horizontal list rows, sticky map with pins/clusters + preview card, property detail (gallery, features, amenities, floor plan, documents, video, FAQ, reviews, mortgage calculator, request-info card), agent directory + profile, pricing, testimonials, FAQ, partner strip, blog, and the newsletter footer.
+- **Backend with real DB** auto-creating schema and seeding all listing/agent/city/blog data on first boot, plus JWT auth and the pre-created account.
+
+## Verification results
+
+- ✅ Full cold start: `down -v && up --build` → frontend HTTP 200 on `:38000`, backend healthy on `:38001`.
+- ✅ Pre-created account `admin@test.com` / `Admin1234!` logs in (JWT returned); wrong password → 401.
+- ✅ Demo SSO (`/api/auth/oauth/demo`) completes a mock flow without crashing.
+- ✅ All 14 README page URLs return HTTP 200.
+- ✅ Testid contract exact — `diff` of the 18 expected vs actual `data-testid` values is clean.
+
+One note: during local testing I had to use `DOCKER_BUILDKIT=0` because the file sandbox blocked Docker's buildx activity-file write in `~/.docker`; this is an environment quirk of my sandbox, not an app issue — the evaluator's normal `docker compose up --build` uses the default builder and is unaffected.

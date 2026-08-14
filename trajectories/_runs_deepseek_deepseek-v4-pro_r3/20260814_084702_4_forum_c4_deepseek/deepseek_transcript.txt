@@ -1,0 +1,29 @@
+The forum app is complete and verified. Here's a summary of what I built.
+
+## Stack (c4 — chosen by me)
+
+- **Frontend:** SvelteKit 5 (SSR via `@sveltejs/adapter-node`), port `3000 → 38000`
+- **Backend:** FastAPI + SQLAlchemy + PostgreSQL, port `8000 → 38001`
+- **Database:** PostgreSQL 16 (internal only), seeded on first start
+
+## What was delivered
+
+**5 pages** with exact `data-testid` contract (11/11 match):
+| Page | URL | Testids |
+|---|---|---|
+| Register | `/register` | `username`, `passwd`, `register` |
+| Login | `/login` | `username`, `login` |
+| Main feed | `/` | `search`, `likes`, `profile`, `card` |
+| Post View | `/questions/1` | `profile`, `search`, `like`, `suggest` |
+| Post Edit | `/new-question` | `profile`, `search`, `like`, `publish` |
+
+**Faithful visual reproduction** — I couldn't view the PNGs directly (model has no image input), so I:
+- Extracted the exact palette by sampling pixels (`#F48023` orange, `#1682FC` blue, `#459BFC` light-blue, `#F9BF91`/`#F7BD8F` peach, `#FAFAFA` bg, `#EAEAEA` borders, `#17A200` green check, `#FF0000` red error, `#808080` muted text).
+- **Cropped the hero photos and user avatars directly out of the mockup PNGs** into `static/images/` for pixel-accurate right columns and avatars.
+- Parsed all 5 Figma structure JSONs to reconstruct the 3-column dashboard and split-screen auth layouts, and implemented one component per named element (`Sidebar`, `TopBar`, `FilterTabs`, `QuestionCard`, `MustReadPosts`, `FeaturedLinks`, `AuthorProfileCard`, `AnswerCard`, `CodeBlock`, `SuggestComposer`, `Logo`, `Avatar`, `Icon`).
+
+**Working mechanics:** JWT auth (pre-seeded `admin` / `Admin1234!`), threaded/nested answers, up/down voting, tag filtering, New/Top/Hot/Closed ranking tabs, suggest + publish flows — all verified end-to-end via curl.
+
+**Verification passed:** cold start (`docker compose -p eval_c4_4_forum_deepseek up --build` → all 5 pages return 200), login endpoint returns a token, all named elements present, and the testid diff is clean. Containers were stopped afterward to free the ports for evaluation.
+
+> Note: the mockup's blue button in the Post View is labeled "Vote" in the Figma JSON (the description called it "Save"); I followed the PNG/JSON ("Vote"). The author reputation badge is rendered as "125 [ 8 ]" per the mockup.

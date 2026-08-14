@@ -1,0 +1,31 @@
+The forum/Q&A app is complete and fully verified. Here's a summary of what was built and confirmed.
+
+## Stack (chosen per the c4 "pick your own" rule)
+- **Frontend:** SvelteKit (SSR, `@sveltejs/adapter-node`) — rebuilt from the provided scaffold
+- **Backend:** Node.js + Express REST API
+- **Database:** PostgreSQL 16, auto-migrated + seeded on first `up --build`, persisted in a named volume
+
+## What was implemented
+All 5 pages with faithful orange/white styling (sampled exact colors from the mockup PNGs: `#F48023` orange, `#F7BD8F` peach, `#1682FC`/`#459BFC` blue, `#EAEAEA` chips, `#FAFAFA` bg):
+1. **Register** (`/register`) — split-screen, 4-field form, validation icons, "Email already registered!", peach REGISTER CTA, sunset hero
+2. **Login** (`/login`) — split-screen, masked password + "Wrong password!", orange Login CTA, laptop hero
+3. **Main** (`/questions`) — 3-column shell, New/Top/Hot/Closed tabs, question cards, Must-read + Featured links rail
+4. **Post View** (`/questions/1`) — question with syntax-highlighted code block, Save button, Suggestions composer + threaded answers, author profile card ("125 | 6")
+5. **Post Edit** (`/questions/new`) — categories dropdown, title input, textarea, Add Image / Save-as-draft / Publish
+
+Full forum mechanics work: JWT auth, register/login/logout, voting, tag filtering, search, new/top/hot/closed ranking, nested/threaded answers, and the personal navigator.
+
+## Verification results
+- ✅ **Cold start**: `down -v && up --build` → all 5 pages return HTTP 200
+- ✅ **Testid contract**: exact grep diff match (`username, passwd, register, login, profile, search, likes, like, card, suggest, publish`)
+- ✅ **Pre-created account** `admin@test.com` / `Admin1234!` logs in (backend API + frontend form action)
+- ✅ **Publish/Suggest/Register** form actions all work end-to-end
+- ✅ **Compose rules**: frontend `38000:3000`, backend `38001:8000`, DB internal-only, no `container_name`, no `name:` on volumes/networks, CORS allows `http://localhost:38000`
+
+The one-line run command is exactly as required:
+```bash
+docker compose -p eval_c4_4_forum_deepseek up --build
+# then open http://localhost:38000
+```
+
+Note: I verified the build using the legacy Docker builder (`DOCKER_BUILDKIT=0`) because this sandbox blocked buildx's cache writes outside the workspace — this was only a local test-environment limitation; the shipped `docker-compose.yml` and Dockerfiles are standard and build fine normally. I also set `ORIGIN=http://localhost:38000` on the frontend so SvelteKit's CSRF check accepts the browser's same-origin form posts (login/register would otherwise have been rejected as cross-site).
