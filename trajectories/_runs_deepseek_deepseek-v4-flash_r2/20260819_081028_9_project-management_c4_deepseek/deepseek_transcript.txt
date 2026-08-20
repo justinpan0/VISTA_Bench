@@ -1,0 +1,31 @@
+The project is complete and fully verified. Here's the final summary:
+
+## AProjectO — Project Management Tool (Task 13, variant c4)
+
+**Stack chosen** (documented in README): **Vite + React 19 + TypeScript + React Router + Recharts** frontend, **Node.js 20 + Express** REST API with JWT auth, **PostgreSQL 16** with auto schema+seed, served by **nginx** — all in a single `docker-compose.yml`.
+
+### What was built
+All 10 described pages, one normalized dataset rendered across many views:
+
+| Page | URL | Highlights |
+|---|---|---|
+| 1 Login | `/` | SVG illustration (man waving + phone mockup), form with `eamil`/`passwd`/`login` |
+| 2 Dashboard | `/dashboard` | 2×2 widgets: projects carousel, tasks donut (32/25/25/18%), work-log donut, Achieved-vs-Target line chart |
+| 3 Tasks list | `/tasks` | 10 rows (gear, meta, Completed/Live chips, `00:10:00` timer, avatar, subtasks), one **High** red row, one inset-selected row |
+| 4 Projects | `/projects` | 3×2 card grid (`card`), deadline, avatar stacks, "14 issues", pagination |
+| 5 Project Details | `/projects/1` | Breadcrumb, Software tag, Time spent `2H : 00 : 00` / Deadline `60d : 00 : 00` pills, Start/End Date columns, kebab |
+| 6 Profile | `/profile` | 3 columns: user card, "Worked with" 4-col grid, Projects thumbnails + `view-all`, "Total work done 5w : 2d" donut |
+| 7 Kanban | `/tasks/board` | Backlog / In progress / Completed with "+ Add card" placeholders and 9 cards (`card`) |
+| 8 WorkLog | `/worklog` | Date-axis timeline with connecting line + hour grid, Total WorkLog donut, Notifications feed |
+| 9 Performance | `/performance` | Line chart + Work Log donut with "This Week", recent task rows with green View pill |
+| 10 Task PopUp | `/tasks?task=1` | Modal over dimmed list: task path, "Make a Suitable form", `00:00` timer + play, metadata grid, Attachments, Description, footer input (`close`/`input`) |
+
+### Verification results (all pass)
+- **Cold start**: `docker compose -p eval_c4_9_project_management_deepseek up --build` → db → backend → frontend all healthy, frontend HTTP 200 on `38000`
+- **Login**: `admin@test.com` / `Admin1234!` works via API and UI (wrong password → 401)
+- **Testid contract**: exact match between description markers and source (`diff` clean) + every page's runtime testids verified with headless Chrome
+- **Demo mode**: all pages render from bundled fallback data with the backend stopped; no console errors on any page
+- **Layout**: headless-browser geometry audit confirms shell (90px topbar, left rail), 2×2/3×2/3-column grids, timeline, and modal; a scale-to-fit frame renders the 1867px design at exact proportions on any viewport (1920/1867/1440 tested, no overflow)
+- **README**: all required sections (`Quick Start`, `Pre-created Account`, `External API Keys`, `Ports`, `API Endpoints`, `Environment Variables`, `Pages` with concrete URLs), and every URL in the Pages table returns 200
+
+Compose rules honored: frontend on `38000`, backend on `38001`, DB not exposed, no `container_name`/`name:` on volumes or networks, CORS allows `http://localhost:38000`, frontend API URL comes from `VITE_API_URL` (never hardcoded `localhost` except the env default).

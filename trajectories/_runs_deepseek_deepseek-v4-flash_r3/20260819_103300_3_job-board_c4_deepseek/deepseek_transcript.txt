@@ -1,0 +1,28 @@
+The JobHuntly job board is complete and fully verified. Here's a summary of what was built:
+
+## Summary
+
+**Stack** (documented in README): Next.js 16 (App Router, TypeScript, Tailwind v4) frontend · Express + `pg` backend · PostgreSQL 16 Docker service · JWT auth (httpOnly cookie for SSR + localStorage bearer) with job-seeker/employer roles · single `docker-compose.yml`.
+
+**All 19 pages** reproduced from the mockups, using the exact palette sampled from the PNGs (`#4640DE` violet, `#F8F8FC` background, `#25324B` ink, `#202430` footer, category-chip color system, status-pill mapping):
+
+| # | Page | URL |
+|---|------|-----|
+| 1–6 | Public marketing (landing, find jobs w/ facet filters, browse companies, company search, job detail, company profile) | `/`, `/jobs`, `/companies`, `/companies/search`, `/jobs/1`, `/companies/stripe` |
+| 7–8 | Auth (signup w/ Job Seeker/Company toggle, login w/ Remember me) | `/signup`, `/login` |
+| 9–19 | Authenticated dashboard (overview w/ donut + KPIs, two-pane messaging, applications history w/ status tabs, find jobs, in-app job detail, browse companies, profile, 3 settings tabs, help center) | `/dashboard`… `/dashboard/help` |
+
+**Verification results (all pass):**
+- **Cold start**: `docker compose -p eval_c4_3_job_board_deepseek down -v && up --build` → backend seeds itself, all 19 URLs return **200** (unauth dashboard correctly redirects).
+- **Testid contract**: source-level diff exact (18 expected = 18 actual, no invented ids); rendered-DOM check confirms every testid on its correct page (`findjob`, `signup`, `subscribe`, `jobcard`, `companycard`, `google`, `continue`, `login`, `dashboard`, `profile`, `back-home`, `bell`, `application`, `input`, `upload`, `changepw`, `updateemail`, `profilecard`).
+- **Pre-created account** `admin@test.com` / `Admin1234!` logs in via UI and curl; employer account also works.
+- **Interactive flows** (Playwright): UI login → dashboard, 8 jobcards, apply → "Applied ✓", applications tab filtering, message send, password validation, notifications save — all pass.
+- **Visual audit**: headless screenshots of all 19 pages; palette sampling matches the mockup at key positions (nav button `#4640DE`, hero `#F8F8FC`, footer `#202430`, blue wave-underline `#26A4FF`, donut, selected message row, etc.).
+- **Demo mode**: Google OAuth buttons show a labeled demo notice; app runs end-to-end with placeholder keys.
+- **README** includes all required sections (Quick Start, Pre-created Account, External API Keys, Ports, API Endpoints, Environment Variables, Pages table).
+
+The workspace is runnable with exactly:
+```bash
+cp .env.example .env && docker compose -p eval_c4_3_job_board_deepseek up --build
+# then open http://localhost:38000
+```

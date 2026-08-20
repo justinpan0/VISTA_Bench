@@ -1,0 +1,22 @@
+All done. The app is fully built, deployed, and verified. Here's a summary of the completed work:
+
+## ✅ Task 1 — Newsletter / Blog Publication (BlogSprout) — Complete
+
+### Stack (c4 — my choice)
+- **Frontend:** Next.js 16 (App Router) + TypeScript + Tailwind CSS 4, server-rendered; API calls are reverse-proxied through `next.config.ts` rewrites (`/api/*` → `http://backend:8000/api/*`), so the browser never talks to the backend directly. No Google Fonts dependency (build-safe offline).
+- **Backend:** FastAPI + SQLAlchemy + PostgreSQL, auto-creates schema and seeds 24 posts / 11 authors / 12 categories / 24 tags / comments / subscribers on first startup (idempotent).
+- **Infra:** single `docker-compose.yml` — db (not exposed to host), backend (`38001`), frontend (`38000`); healthchecks gate backend→db and frontend→backend.
+
+### Verification results (all pass)
+1. **Cold start:** `docker compose -p eval_c4_1_newsletter_deepseek down -v && up --build` → all services healthy, frontend HTTP 200.
+2. **All 9 pages 200:** `/`, `/post/adventures-across-continents`, `/author/alexandra-h`, `/category/nature`, `/tag/nature`, `/date/2024/10`, `/search?q=Travel`, `/about`, `/contact` (+ `/login`, `/admin`) — plus all dynamic variants tested.
+3. **Pre-created account** `admin@test.com` / `Admin1234!` logs in via `/api/auth/login` (JWT issued; wrong password → 401); `/login` + `/admin` dashboard render.
+4. **Demo mode:** no 500s anywhere; subscribe/contact/comment POSTs persist to the DB (SMTP placeholders documented, degrade gracefully).
+5. **Visual audit per page:** every named section from the description + Figma structure implemented — hero with `<title>` + author chips + caption strip, Faces & Stories collage, quote, Explore Categories + category counts, 4 KPI stats (500+/410K/99+/328+), cinematic banner with play button, newsletter CTA, article reader with TOC/Categories/Nature tile/Our Gallery/Tags rail, comments + Leave a Reply form, Popular Post grid, author profile + 3×2 grid + pull-quote, category hero + carousel (Lifestyle/Wellness/Fashion/Write/Nature/Cooking) + Popular News, tag pill-bar + Load More, date list + List/Month toggle, search purple banner + HOT TOPICS + PRO overlay cards, About awards + 72k badge, Contact info rows + map + Follow Me — with one component per named element.
+6. **Testid contract:** exact match between `description.md` markers and rendered HTML (`article, category-nature, contact-us, home, login, search, send-message, service, submit, subscribe, title, your-email, your-name`) — `diff` clean.
+7. **Linkability:** every page reachable by URL and linked from at least one other page (nav, cards, footers).
+8. **README accurate:** Quick Start uses the mandated command, Pages table rows all verified 200, plus required Ports / Pre-created Account / External API Keys / API Endpoints / Environment Variables sections.
+
+### Notes
+- `../inputs` is read-only; all generated code lives in `workspace/` (`docker-compose.yml`, `.env`, `README.md`, `backend/`, `frontend/`).
+- Placeholder "photos" are deterministic generated SVG scenes (offline-safe); avatars are gradient discs with initials — the only reasonable approximation given the PNGs couldn't be viewed (model has no image input) and Figma JSON contains no fill colors; layout/typography/palette were reconstructed from the JSON bboxes, text nodes, and description (white canvas + purple `#7C3AED` accent + dark brand bands).

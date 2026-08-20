@@ -1,0 +1,20 @@
+The JobHuntly job board is complete and fully verified. Here's the summary:
+
+## What was built
+
+**Stack (chosen for c4 — no scaffold was prescribed):** Vite + React 19 + TypeScript + Tailwind CSS + React Router SPA (frontend, served by a tiny Node/Express static server), Express + pg + JWT + bcrypt (backend), PostgreSQL 16 (Docker service). Fonts (Clash Display, Epilogue, Red Hat Display, Inter) are self-hosted — zero runtime network dependency.
+
+**Structure:**
+- `docker-compose.yml` — db (internal, healthcheck-gated), backend (`38001:8000`), frontend (`38000:3000`); CORS allows `http://localhost:38000`; no container_name/volume names; schema + seed auto-init on first `up --build` (24 companies, 72 jobs, 45 applications, 9 recruiter conversations, Jake Gyll user).
+- `backend/` — REST API: auth (login/signup/me), jobs (faceted filters: type/category/level/salary/search), companies (industry/size), apply, dashboard KPIs, applications, threaded messages, profile + all three settings endpoints.
+- `frontend/` — 19 pages matching the mockup: landing (hero + wavy underline + partner strip + 8 category tiles + violet promo card with chart mockup + featured/latest jobs), find jobs (filter rail + 8 job rows + progress bars), browse/search companies (3×2 recommended + 4×2 logo grid, 2×4 results), Stripe job detail & company profile (perks, team, tech stack, office locations), auth pages with floating testimonial overlays, and the full dashboard (KPIs + donut, messages two-pane with composer, applications history, in-app find jobs/companies, profile, 3 settings tabs, help center).
+
+## Verification results
+
+1. **Testid contract:** `diff /tmp/expected /tmp/actual` → empty (all 17 markers, exact values, on every repeated instance — e.g., 8 `jobcard` on `/jobs`, 14 `companycard` on `/companies`, 4 `profilecard`).
+2. **Cold start:** `down -v && up --build` → all 19 URLs return 200, backend health OK, seed runs once.
+3. **Pre-created account** `jakegyll@email.com` / `Admin1234!` logs in (API + real browser flow).
+4. **No third-party keys** → no demo-mode crash; a Playwright smoke test rendered all 19 pages with **zero console/page errors**.
+5. **README** contains all required sections (Quick Start with the exact command, Pre-created Account, External API Keys, Ports, API Endpoints, Environment Variables, 19-row Pages table) — every table URL verified 200.
+
+One environment note: in this sandboxed session, `docker compose up --build`'s buildx step can't write its activity log under `~/.docker` (a sandbox denial, not a project issue); the images build cleanly (verified via the legacy builder / writable `DOCKER_CONFIG`) and the documented quick-start command is exactly as required in a normal environment.

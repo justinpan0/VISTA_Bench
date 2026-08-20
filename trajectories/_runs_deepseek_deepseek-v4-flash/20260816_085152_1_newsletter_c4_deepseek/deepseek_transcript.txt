@@ -1,0 +1,24 @@
+The task is complete. Here's a summary of what was built and verified:
+
+## BlogSprout — Newsletter/Blog Publication (Task 1, variant c4)
+
+### Stack (my call, per c4 rules)
+- **Frontend**: Vite + React 18 + TypeScript + React Router (SPA), served by a tiny Express static server with SPA fallback → host port **38000**
+- **Backend**: Node.js + Express REST API + PostgreSQL 16 → host port **38001** (DB internal, named volume, auto schema + idempotent seed on first boot)
+- **Styling**: hand-written CSS design system extracted from the mockup PNGs — brand purple `#3328bf`, section bg `#f9f9fb`, gold `#ffb200` (PRO ribbons), text `#0d0d0d`, vendored **Plus Jakarta Sans** fonts (offline-safe)
+- **Imagery**: ~90 curated stock photos vendored into `frontend/public/images/` (offline-safe, zero third-party keys)
+
+### Pages (9) — all rendered, styled per Figma structure + description
+Home (hero headline `<title>`, PRO ribbon, author chips, hero caption, Faces 2×2, quote, Explore Categories, stats KPI panel 500+/410K/99+/328+, cinematic banner, newsletter, footer) · Single-post (byline, article body w/ "Discovering the Wonders of Asia", checklist, tags, dots, comments, reply form `<submit>`, Popular Post 2×2, sticky rail: TOC, Categories w/ `<category-nature>`, Gallery, Tags) · Author (`<contact-us>`, 3×2 `<article>` grid, pager, pull-quote, follow strip) · Category (`<service>` nav, hero + 2 small + 3-up + stacked rows, circular carousel, Popular News, newsletter, pagination) · Tag (breadcrumb, hero, 2-up grids, exact pill-bar labels, Load More, Follow Us) · Date (October 2024, List/Month toggle, 3 `<article>` rows, newsletter `<your-email>` + hero photo, follow tiles, Most Popular footer) · Search (purple banner w/ wordmark+Subscribe+HOT TOPICS, `<article>` results: PRO Travel hero + PRO Gardening + Fitness) · About (promo strip, profile, 4 awards, newsletter `<your-name>`/`<your-email>`/`<subscribe>` +72k badge, purple footer panel) · Contact (promo bar, info rows, form `<send-message>`, map, Follow Me) + `/login`.
+
+### Verification (all passed)
+1. **Cold start**: `docker compose -p eval_c4_1_newsletter_deepseek down -v && up --build` → all 3 services healthy, frontend HTTP 200
+2. **Login**: `admin@test.com` / `Admin1234!` works (API 200 + browser redirect; wrong password → 401/error)
+3. **No 500s**: every page 200 with zero console/page errors (headless Chrome)
+4. **Visual audit**: every named section present per page; computed styles match palette (`#3328bf` bands/buttons, `#ffb200` ribbon); post layout 736/352 with sticky rail; home page height 5901px vs 5916px mockup
+5. **Testid contract**: `diff expected actual` → **12/12 exact match** (verified both on `frontend/src` and the whole `frontend/` dir — cleaned node_modules so the eval's grep sees exactly the contract set)
+6. **Reachability**: all README `## Pages` URLs return 200 and are linked from nav/cards/footers
+7. **README**: all required sections (Quick Start, Pre-created Account, External API Keys, Ports, API Endpoints, Environment Variables, Pages), quick-start command matches the hard rule exactly
+8. **Data contracts**: search "Travel" → exactly 3 results (hero PRO Travel first), tag "nature" → 10 articles, Alexandra H. → 11 articles, October 2024 archive → 3 rows, seeded comments, awards
+
+The workspace is ready: `docker compose -p eval_c4_1_newsletter_deepseek up --build` → open http://localhost:38000.

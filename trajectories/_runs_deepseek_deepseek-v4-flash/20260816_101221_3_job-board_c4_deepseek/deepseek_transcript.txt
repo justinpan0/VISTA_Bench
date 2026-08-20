@@ -1,0 +1,33 @@
+The JobHuntly job board is complete and fully verified. Final summary:
+
+## What was built
+
+**Stack (agent's choice per variant c4):** Vite + React 19 + TypeScript SPA served by nginx (which proxies `/api` → backend), Node.js 20 + Express + PostgreSQL 16 backend, all in one `docker-compose.yml` at the project root.
+
+**All 19 pages implemented** with shared components (`TopNav`, `Footer`, `JobCard`, `CompanyCard`, `DashboardLayout`, `JobDetailBody`, `PerksGrid`, `StatusPill`, `Avatar`, `Pagination`):
+
+| Page # | URL | Page # | URL |
+|---|---|---|---|
+| 1 Landing | `/` | 11 Applications History | `/dashboard/applications` |
+| 2 Find Jobs | `/jobs` | 12 Find Jobs (dash) | `/dashboard/find-jobs` |
+| 3 Browse Companies | `/companies` | 13 Job Descriptions (dash) | `/dashboard/find-jobs/1` |
+| 4 Search Companies | `/companies/search` | 14 Browse Companies (dash) | `/dashboard/companies` |
+| 5 Job Descriptions | `/jobs/1` | 15 Profile | `/dashboard/profile` |
+| 6 Company Profile | `/companies/stripe` | 16 Settings (Profile) | `/dashboard/settings` |
+| 7 Sign Up | `/signup` | 17 Settings (Login) | `/dashboard/settings/login` |
+| 8 Log In | `/login` | 18 Settings (Notifications) | `/dashboard/settings/notifications` |
+| 9 Dashboard Home | `/dashboard` | 19 Help Center | `/dashboard/help` |
+| 10 Messages | `/dashboard/messages` | | |
+
+**Backend:** 24 seeded companies, 95 jobs (so every company card shows its mockup "7 Jobs"/"3 Jobs" badge), 45 applications (Jake Gyll — curated history rows Nomad/Udacity/Packer/Divvy/DigitalOcean with the exact mockup statuses, 18-interview KPI), 9 recruiter conversations with a threaded message view, JWT auth, apply flow, settings (email/password/notifications), newsletter.
+
+## Verification results (all pass)
+
+1. **Cold start** — `docker compose -p eval_c4_3_job_board_deepseek down -v && up --build` → frontend HTTP 200, backend healthy, seed logs `1 user, 24 companies, 95 jobs, 45 applications, 9 conversations`
+2. **Login** — `jakegyll@email.com` / `Admin1234!` → 200 + token; wrong password → 401; dashboard routes guard (401 without token)
+3. **Testid contract** — exact spec diff: **18/18 markers present** in source and rendered DOM (verified via headless Chrome census across all 19 pages)
+4. **All 19 URLs** return 200 with correct content, zero JS console errors (headless Chromium smoke test of every page, including login → dashboard flow, message send, job apply, password change validation, notifications update, FAQ accordions)
+5. **README** has all required sections: Quick Start, Pre-created Account, External API Keys (none needed — app is fully self-contained), Ports (38000/38001, DB internal), API Endpoints (22 endpoints), Environment Variables, Pages table
+6. **Hard rules honored** — frontend `38000:80`, backend `38001:8000`, DB not exposed, no `container_name:`, no volume/network `name:`, CORS allows `http://localhost:38000`
+
+One operational note: this environment's file sandbox blocks Docker's buildx writes under `~/.docker`, so the build was run with `BUILDX_CONFIG=/tmp/dockerbuildx` — on the evaluator's machine the plain `docker compose -p eval_c4_3_job_board_deepseek up --build` works as documented.

@@ -1,0 +1,26 @@
+The DreamsChat app is complete and fully verified. Here's a summary of what was built:
+
+## Summary
+
+**Stack** (no scaffold was prescribed — chosen to fit the task): **Next.js 16** (App Router, TypeScript, `@tabler/icons-react`, locally-bundled `@fontsource/inter`) frontend + **FastAPI/SQLAlchemy** backend + **PostgreSQL 16**, all in a single `docker-compose.yml` with healthchecks, auto-init schema + seed, and a named volume.
+
+**Pages (10)** — all rendered server-side from backend data (with a bundled fallback so demo mode never 500s):
+1. `/signup` — 2-column grid form (`first-name`, `email`, `google`, `facebook`), violet panel with tilted mini-chat + floating avatars/emoji
+2. `/signin` — `username`, `passwd`, social SSO, works with seeded `Admin` / `Admin1234!`
+3. `/success` — green check card + `navigate` button
+4. `/chat` — icon rail (`chat`/`setting`/`profile`), Recent Chats scroller, All Chats list, Edward Lietz thread with reactions, audio waveform (0:00), `Ecommerce.zip` file card, "Yesterday" divider, typing bubble, composer `input`
+5. `/contacts` — alphabetical A–W sections + Edward's call-history cards (Missed Audio/Video, Audio Call Ended, Ongoing Call pill)
+6. `/groups` — all 14 named groups; The Dream Team thread with named senders, reactions, incoming 3+2 image grid ("View All Images")
+7. `/status` — My Status/Recent/Already Seen + full-bleed sushi-with-Christmas SVG story viewer, progress bar, play, `full-screen`, view count
+8. `/calls` — All Calls list (Edward selected/violet) + same history pane
+9. `/video-call` — video modal over the Calls layout: remote participant waving, PiP self-view, controls with `end` + `more`
+10. `/voice-call` — voice modal over the Chats layout: large round avatar, self tile, same controls
+
+**Verification (all passed):**
+- Cold start `docker compose -p eval_c4_6_chat_deepseek up --build` (after `down -v`) → every page HTTP 200 on `:38000`
+- `Admin`/`Admin1234!` logs in via backend, frontend proxy, and demo fallback; wrong password → 401
+- Testid contract: source grep diff is an exact match vs `inputs/description.md`; all testids present in rendered HTML on the right pages
+- Demo mode (backend stopped) renders all pages without 500
+- CORS preflight allows `http://localhost:38000`; no `localhost` hardcoded in app code (service-name `http://backend:8000` used inter-container)
+- Compose hard rules respected (ports 38000/38001, DB internal, no `container_name`/volume names)
+- README has Quick Start, Pre-created Account, External API Keys (OAuth demo mode), Ports, API Endpoints, Environment Variables, and an accurate Pages table (all 10 URLs → 200)

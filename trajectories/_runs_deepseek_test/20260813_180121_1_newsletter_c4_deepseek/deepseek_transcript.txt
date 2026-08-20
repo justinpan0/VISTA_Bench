@@ -1,0 +1,1 @@
+A few final refinements — align the byline view count with the mockup and show views in the hero caption:

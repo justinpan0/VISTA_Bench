@@ -1,0 +1,19 @@
+All tasks complete. The **Dreams Estate** real-estate marketplace is fully built, deployed, and verified.
+
+## Summary
+
+**Stack (documented in README):** React 18 + Vite 5 + React Router 6 (frontend, nginx-served), Node 20 + Express with JWT auth (backend), PostgreSQL 16 (Docker service, auto-init schema + idempotent seed) — all 14 mockup pages reconstructed from the Figma structure JSONs (PNG viewing wasn't available, so every layout came from the Figma node trees + description semantics).
+
+**What was delivered:**
+- **3 services** in `docker-compose.yml`: `db` (internal, healthchecked), `backend` (`38001:8000`), `frontend` (`38000:80`, nginx proxies `/api` → backend). Cold start with `docker compose -p eval_c4_2_real_estate_deepseek up --build` only.
+- **All 14 pages:** Sign in / Sign up (with demo OAuth 2.0 authorization-code flow modal for Google/Facebook), long-scroll Home (hero search widget, How It Works, Explore by Property Type, filterable Featured for Sale/Rent grids, Cities, Stats, Partners, Testimonials, 3-tier Pricing, FAQ + poolside photo, Become an Agent, Blog, newsletter footer), Buy & Rent listing pages with **grid / list / grid-with-map views on the same URL** (`?view=` toggle), full detail pages (gallery + 6 thumbnails, features, about, amenities, floor plan, documents, video, FAQ, reviews, sticky Request Info/Enquire rail, mortgage calculator on buy only, similar-properties carousel), and the agent directory (grid/list + Milton Rodriguez profile with My Listing tabs).
+- **Backend API:** 13 documented endpoints — auth (signup/signin/social/me), properties with faceted filters (category, bedrooms, bathrooms, sqft, price, rating, amenities, agent) + sort + pagination, property detail + similar, reviews CRUD, inquiries, agents with filters, agent enquiries.
+- **Exact data:** 40 seeded properties (buy/rent with the exact mockup names, prices, ratings, addresses, badges), 10 agents, admin account, reviews — all with the exact `data-testid` contract (18 unique markers).
+
+**Verification results (all pass):**
+- ✅ Cold start: `down -v` → `up --build` → frontend 200, backend healthy
+- ✅ `admin@test.com` / `Admin1234!` logs in (API + browser)
+- ✅ Testid diff: exact match, 18/18 markers
+- ✅ All 14 README `## Pages` URLs → HTTP 200, rendered headlessly in Chrome with zero JS/HTTP errors
+- ✅ Interactive flows verified in a real browser: sign-in, sign-up, OAuth demo, inquiry + review submission (persisted to DB), Load More (9→18 cards), view toggles, filter apply (8 filter fields), map pins + preview card
+- ✅ Layout geometry: 3-column 416px cards, navy `#1C1C2D` breadcrumb bands, sticky right rail, 4×2 agent grid — matching the mockup structure

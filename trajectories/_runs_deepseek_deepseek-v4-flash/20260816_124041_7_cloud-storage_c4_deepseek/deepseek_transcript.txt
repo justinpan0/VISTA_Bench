@@ -1,0 +1,25 @@
+All done. The complete cloud-storage SaaS (Deupload) is built, containerized, and verified.
+
+## Summary
+
+**Stack chosen (per c4 — no scaffold prescribed):** React 19 + TypeScript + Vite SPA (custom Lexend design system), Node/Express + PostgreSQL backend, three-service Docker Compose.
+
+**Deliverables in `workspace/`:**
+- `docker-compose.yml` — `frontend` (38000→3000), `backend` (38001→8000), `db` (Postgres 16, internal only, named volume, schema+seed auto-init via `backend/init.sql`). No `container_name`, no named volumes/networks; backend healthcheck gates on DB; CORS allows `http://localhost:38000`.
+- `backend/` — Express REST API (JWT auth: email-check / register / login / social / me; files, transfers, users, plans, transactions, tags, CMS pages, languages, referrals, settings) + seeded Postgres schema.
+- `frontend/` — all **33 pages** from the mockup: 3 auth pages, 5 file-browser views (list/grid/photos/folders/transfer), 10 profile pages, 15 admin pages, with per-section components (IconRail, File/Profile/Admin sidebars, DetailRail, UsageBar, BarChartCard, Toggle, masonry gallery, transfer table, provider cards, etc.). Local Lexend fonts + Unsplash photos bundled; production static server proxies `/api` to the backend.
+- `.env` / `.env.example` — standard defaults + `REPLACE_ME` third-party keys with graceful **DEMO MODE** social login (Standard OAuth 2.0 flow simulated until real keys replace placeholders; admin panel configures them).
+- `README.md` — Quick Start, Pre-created Account table (`admin@test.com` / `Admin1234!`, plus demo user), External API Keys, Ports, API Endpoints, Environment Variables, and a Pages table mapping all 33 pages to concrete URLs.
+
+**Verification (all passing):**
+1. Cold start from scratch (`down -v && up --build`) → fresh DB seeded, frontend/backend healthy, all routes HTTP 200.
+2. Pre-created credential logs in (curl + headless-Chrome UI flow: welcome → email → login → admin dashboard; register → files; demo Google login → files; logout → welcome).
+3. Headless-Chrome smoke test: **33/33 routes** render expected content with correct testids (`home`, `dashboard`, `profile`, `privacy`, `payments`, `email`, `google`, `apple`, `create`, `login`, `full-name`, `ins`).
+4. Testid contract diff: expected == actual exactly (12 markers, none missing, none extra).
+5. Screenshot pixel analysis confirms the mockup's three-pane structure at 1440px (80px rail + 224px sidebar + main + 320px detail rail, violet/white/grey palette, photo in the right rail, gradient illustration on auth pages).
+
+The workspace is runnable with exactly the README command:
+```bash
+docker compose -p eval_c4_7_cloud_storage_deepseek up --build
+# then open http://localhost:38000
+```

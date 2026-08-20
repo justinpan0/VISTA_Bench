@@ -1,0 +1,22 @@
+All verification steps pass. The project is complete and the stack is running. Here's the final summary:
+
+## Completed — Travel / Tour Booking Site (variant c4)
+
+**Stack chosen:** Next.js 14 (App Router, TypeScript) frontend + Express 4 backend + PostgreSQL 16, orchestrated with a single `docker-compose.yml`. Self-hosted fonts (Volkhov, Poppins, Yesteryear, Manrope) are bundled so the Docker build has no external font dependency.
+
+### What was built
+| Page | URL | Testids |
+|---|---|---|
+| 1 Homepage (hero + search widget, partner logos, Best Services, Romantic Tropical, Resort Bookings, Europe Sightseeing + 4 dest tiles, Explore Nature/Cities bands, Trending 3-up grid, testimonial slider, footer) | `/` | `home`, `touch` |
+| 2 Build Your Own Package (homepage behind + centered modal: destinations, date range/guests, 19 activity chips, Add Package) | `/build-your-own-package` | `home`, `touch` |
+| 3 About Us (script hero, kayaker circle, Wanderlust banner, radial plans 78/55/30, 4×3 international grid, testimonials, footer) | `/about` | `home`, `touch`, `view-packages`, `card`×11, `subscribe` |
+| 4 Package Archive (script hero, sticky sort toolbar, 3×2 cards, Plan Your Trip filter, luggage, pagination) | `/packages` | `home`, `touch`, `date`, `card`×6, `subscribe` |
+| 5–8 Package Detail (4 tabs: Information / Tour Plan / Location / Gallery) | `/packages/switzerland[?tab=plan\|location\|gallery]` | `home`, `touch`, `info`, `subscribe` |
+
+### Verification results (all green)
+- **Cold start**: `docker compose -p eval_c4_5_travel_booking_deepseek down -v && up --build` from scratch → DB auto-seeds 6 packages, backend healthy, all 8 pages HTTP 200.
+- **Testid contract**: `diff expected actual` → **exact match** (`card, date, home, info, subscribe, touch, view-packages`).
+- **Browser-level (headless Chromium)**: no console errors, no horizontal overflow on any page; booking → `Reservation created`, newsletter → subscribed, custom package → added (all persisted to Postgres); archive sorting works; tab navigation renders 5 plan items / map / 7-tile mosaic.
+- **Visual fidelity**: photo assets (heroes, cards, gallery, map, luggage, tiles, logos) were cropped directly from the mockup PNGs using the Figma JSON bounding boxes; palette (`#DF6951` orange, `#181E4B` navy, gold stars) and layout coordinates matched; pixel analysis confirms rendering.
+- **README**: contains Quick Start (exact required command), Pre-created Account (no-auth note), External API Keys (none), Ports, API Endpoints, Environment Variables, and an accurate Pages table — every listed URL returns 200.
+- **Hard rules**: ports `38000`/`38001`, DB internal-only, no `container_name`, no `name:` on volumes/networks, CORS allows `http://localhost:38000`.

@@ -1,0 +1,32 @@
+The FASCO e-commerce store is complete and fully verified. Here's the final summary:
+
+## What was built
+
+**Stack (chosen per the c4 variant — no scaffold was prescribed):** Vite + React + TypeScript SPA (served by nginx) · Node/Express REST API · PostgreSQL 16 · Docker Compose. Documented in the README.
+
+**All 7 pages** rendered from the Figma structure JSONs, with real photography **cropped 1:1 from the mockup PNGs** (70 image crops) and the palette matched via pixel-sampling the mockups:
+
+| Page | URL | Key elements |
+|------|-----|--------------|
+| 1 Sign in | `/signin` | photo left, SSO buttons (`google`), email (`email`), Sign In (`signin`) |
+| 2 Sign up | `/signup` | 2×3 input grid (`first-name`, `last-name`, `create`) |
+| 3 Home | `/` | 3-up hero (`shop-now`), brand logos, Deals Of The Month + live countdown, New Arrivals 3×2 grid (`card`), Peaky Blinders banner, features strip, 7-tile Instagram row, testimonials, newsletter (`subscribe`) |
+| 4 Shop | `/shop` | filter accordions (Size/Colors/Prices/Brands/Collections/Tags), sort + results count, 3×3 grid (`card`), pagination, shared banners |
+| 5 Product | `/products/1` | thumbnail strip, hero, sale price + Save badge, size/color variants, quantity, Add to cart (`add-cart`), People Also Loved carousel |
+| 6 Cart | `/cart` | 4-column line-item table, wrap upsell, subtotal math, Checkout (`checkout`) |
+| 7 Checkout | `/checkout` | Contact/Delivery/Payment sections, Pay Now (`pay`), sticky summary, discount codes (`FASCO10`/`WELCOME15`) |
+
+**Backend:** JWT auth (pre-seeded `admin@test.com` / `Admin1234!`), Google Standard OAuth 2.0 flow with clearly-labeled demo mode under placeholder keys, products API with faceted filtering, discount validation, server-side order math. DB auto-inits schema + 23 products + codes on first boot.
+
+## Verification results (all passing)
+
+- ✅ **Cold start**: `docker compose -p eval_c4_8_ecommerce_deepseek up --build` from a fully cleaned state (`down -v`) → frontend 200 on :38000, backend :38001, db healthy
+- ✅ **Pre-created account logs in** (API curl + real UI flow in headless Chrome)
+- ✅ **Demo mode**: every page loads with `.env` placeholders; Google sign-in completes a labeled mock flow
+- ✅ **Testid contract**: exact 14/14 match (`diff` clean, no missing, no extras in source)
+- ✅ **Render test**: all 7 pages render in headless Chrome with zero console errors
+- ✅ **Structural audit**: every named element from description + Figma JSON present on every page
+- ✅ **Flow tests**: login → add-to-cart → cart math ($100+$39=$139) → discount (−10%) → Pay Now → order confirmation; shop filters change the grid
+- ✅ **Geometry**: filter-rail/grid split, sticky summary, 3-up hero, 7 instagram tiles, no horizontal overflow anywhere
+- ✅ **Compose hard rules**: 38000/38001 ports, db internal, no `container_name`, no named volumes/networks, CORS allows `http://localhost:38000`
+- ✅ **README**: all required sections (Quick Start, Pre-created Account, External API Keys, Ports, API Endpoints, Env Vars, Pages table with concrete URLs) — every row verified HTTP 200

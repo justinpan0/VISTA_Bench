@@ -1,0 +1,1 @@
+Let me verify the few elements I sampled at wrong positions, using precise DOM coordinates:

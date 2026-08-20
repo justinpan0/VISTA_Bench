@@ -1,0 +1,28 @@
+The task is complete. Here's a summary of what was built and verified:
+
+## alemhelp — Forum / Q&A Platform (Task 7, variant c4)
+
+**Stack chosen** (per c4, my call): SvelteKit (Svelte 5 runes) SPA frontend · FastAPI + SQLAlchemy backend · PostgreSQL 16 — chosen because the provided scaffold was SvelteKit and the mockup is a classic three-column dashboard that maps cleanly to a client-side SPA talking to a REST API.
+
+### What's in the workspace
+- **`docker-compose.yml`** — frontend on host `38000`, backend on `38001`, DB internal (not exposed), no `container_name`/volume/network names, healthchecks gate backend→DB and frontend→backend, CORS allows `http://localhost:38000`
+- **`backend/`** — FastAPI with JWT auth (PBKDF2 hashing), 9 users / 8 questions / threaded answers / votes, auto schema+seed on first boot; `admin@test.com` / `Admin1234!` pre-seeded
+- **`frontend/`** — 5 mockup pages + supporting pages (`/tags`, `/ranking`, `/my/questions`, `/my/answers`, `/my/likes`); one component per named UI element (Tabs, QuestionCard, RightRail, ProfileCard, AnswerCard, SuggestComposer, CodeBlock, TagChip…)
+- **`README.md`** — all required sections (Quick Start, Pre-created Account, External API Keys, Ports, API Endpoints, Environment Variables, Pages table)
+
+### Fidelity approach
+Since the PNGs are ground truth, I **sampled exact colors** from them (`#F48023` orange, `#1682FC` blue, `#EAEAEA` borders, `#FAFAFA` bg) and **cropped real assets** from the mockups (both hero photos, all 11 avatar/profile images, the logo mark) so the photos are pixel-identical to the design. Every Figma JSON node (positions, sizes, font weights, text) was mapped to a rendered element.
+
+### Verification (all passing)
+- ✅ **Cold start**: `docker compose -p eval_c4_4_forum_deepseek down -v && up --build` → frontend 200, backend healthy, fresh seed (8 questions, 13-comment threaded Q1)
+- ✅ **Pre-created account** logs in (by email and username); register/login/suggest/publish all work end-to-end
+- ✅ **Testid contract exact**: 11/11 (`username, passwd, register, login, search, profile, likes, card, like, suggest, publish`), no extras
+- ✅ **Headless-Chrome smoke + interaction tests**: all pages render, tabs (New/Top/Hot/Closed), search, personal navigator, voting, reply toggles ("Hide All Replies (2)" / "Show All Replies (8)") — zero console errors
+- ✅ **Visual audit** (screenshot vs mockup, region-based): Main 1.7 / Register 2.3 / Login 3.1 / PostEdit 3.8 / PostView 7.0 avg-diff (0–255 scale), every region "OK"
+- ✅ Every README `## Pages` row returns HTTP 200 and every page is linked from another page
+
+Run it with exactly:
+```bash
+docker compose -p eval_c4_4_forum_deepseek up --build
+# then open http://localhost:38000
+```

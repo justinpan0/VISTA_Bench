@@ -1,0 +1,32 @@
+The task is complete. Here's a summary of what was delivered:
+
+## alemhelp — Forum/Q&A Platform (Task 7, variant c4)
+
+**Stack chosen (self-selected, no scaffold command was provided):**
+- **Frontend:** SvelteKit 5 (scaffolded from the provided `sv` minimal template, switched to `@sveltejs/adapter-node` for Docker SSR) + TypeScript + Vite 8
+- **Backend:** Node.js Express REST API (JWT auth, bcrypt, `pg`)
+- **Database:** PostgreSQL 16 (schema + full demo seed auto-initialised by the backend on first boot, persisted via named volume)
+
+### Pages (all 5, faithful to the Figma mockups)
+| Page | URL |
+|---|---|
+| 1. Register (split-screen, sunset hero, validation icons, peach REGISTER CTA) | `/register` |
+| 2. Login (split-screen, laptop hero, "Wrong password!" state) | `/login` |
+| 3. Main feed (3-column shell, filter tabs New/Top/Hot/Closed, 5 question cards w/ tags+counters, Must-read + Featured rails) | `/` |
+| 4. Post View (code block w/ line numbers, Vote button, Suggestions composer, threaded comments w/ indicators & reply counts, author profile card "125 [ 8 ]") | `/questions/1` |
+| 5. Post Edit (Choose categories, title, tall textarea, blue Add Image, disabled Save as draft, orange Publish) | `/questions/new` |
+
+### Verification results (all pass)
+1. **Stack consistent** — configs + README document SvelteKit/Express/Postgres.
+2. **Cold start** — `docker compose -p eval_c4_4_forum_deepseek down -v && up --build` → all 3 services healthy, every page HTTP 200.
+3. **Pre-created account** `azakost / admin@test.com / Admin1234!` logs in (API token + SSR cookie session, personal-navigator filters work).
+4. **Demo mode** — no third-party keys; every page renders without 500.
+5. **Visual audit** — automated audit of every Figma text node: **Register/Login/Main/Post Edit are 100% text-exact**; Post View is exact except the question's tag chips (the mockup itself shows conflicting tags for Q1 in feed vs post view — I follow the feed's `golang/linux/overflow`, keeping the most-visible page exact; noted in code comments).
+6. **Testid contract** — exact `grep` diff from the spec passes (`card like likes login passwd profile publish register search suggest username`), with `card` on all 5 feed cards and `likes`/`like` variants per page.
+7. **All pages reachable & linked** (cards → `/questions/:id`, "Ask a question" → `/questions/new`, navbar buttons cross-link auth pages).
+8. **README `## Pages` table** — every row curl-verified 200 + correct content.
+
+### Operational notes
+- `docker-compose.yml`: no `container_name`, no volume/network `name:`, DB not exposed, ports `38000:3000` / `38001:8000`, CORS allows `http://localhost:38000`, healthchecks gate backend on DB and frontend on backend.
+- Working defaults baked into compose + `.env`/`.env.example`; zero manual config.
+- One environment quirk: the host sandbox blocks Docker CLI writes to `~/.docker`, so local builds used `DOCKER_CONFIG=/tmp/dockerconf` (doesn't affect the eval, which runs `docker compose up --build` directly).

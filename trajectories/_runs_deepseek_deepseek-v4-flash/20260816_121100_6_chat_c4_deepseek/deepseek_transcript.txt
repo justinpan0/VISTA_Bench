@@ -1,0 +1,20 @@
+All done. The complete **DreamsChat** team-chat app is built, deployed, and fully verified in the workspace.
+
+## Summary
+
+**Stack (documented in README):**
+- **Frontend** — React 19 + TypeScript + Vite 8 SPA, `react-router-dom`, `lucide-react` icons, hand-built CSS design system matching the Figma mockups (violet `#6338F6` primary, white surfaces, pastel avatars, doodle chat background, Archivo font). Served by nginx on host port `38000`.
+- **Backend** — Node 20 + Express REST API with JWT auth (bcrypt), CORS allowing `http://localhost:38000`, on host port `38001`. Google/Facebook buttons implement the standard OAuth 2.0 Authorization Code flow with graceful **demo mode** under placeholder keys.
+- **Database** — PostgreSQL 16 as an internal Docker service (not exposed), schema auto-init + seed on first `up --build`, persisted via named volume.
+
+**All 10 pages** reproduced from the Figma structure JSONs + descriptions: 3 auth pages (two-column layout with violet illustration panel, tilted chat screenshot, floating avatars/emoji) and 7 in-app pages sharing the fixed shell (72px icon rail + 400px list pane + 968px content pane) — Chats with Edward Lietz's full thread (reactions, audio waveform, Ecommerce.zip card, link preview, video bubble, call cards, typing indicators, day dividers), Contacts with alphabetical sections + call history, Groups (The Dream Team with member-avatar header, named messages, 5-tile image grid, reactions), Status with the story viewer (progress sliders, play/pause, `<full-screen>`, 90% indicator, sushi/Christmas SVG art), Calls, and the two call modals with live timer, PiP self-view, big red `<end>` and `<more>` controls.
+
+**Verification results (all pass):**
+1. ✅ Cold start: `cp .env.example .env && docker compose -p eval_c4_6_chat_deepseek up --build` → frontend HTTP 200, backend healthy, DB seeded (verified after `down -v` wipe)
+2. ✅ `rabino` / `Admin1234!` (and `admin@test.com`) logs in via real API; wrong passwords rejected
+3. ✅ Demo mode: all 10 pages load without 500; OAuth demo redirects to `/chat` with a token
+4. ✅ **Testid contract exact** — `diff expected actual` empty (14/14: chat, email, end, facebook, first-name, full-screen, google, input, more, navigate, passwd, profile, setting, username)
+5. ✅ Headless-browser DOM audit: every page's named texts, placeholders and testids present, no console errors, correct shell geometry (72/400/968)
+6. ✅ Every page reachable at its URL **and** linked (rail tabs, header call icons, auth footers, Forgot-Password→Success→Sign-In chain)
+7. ✅ README `## Pages` table curl-verified: all 10 URLs return HTTP 200
+8. ✅ Interaction flows: sign-up, sign-in, composer send, rail navigation, video-call open, end-call return — all pass

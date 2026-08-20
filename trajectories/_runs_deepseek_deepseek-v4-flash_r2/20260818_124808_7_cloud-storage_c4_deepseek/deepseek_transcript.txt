@@ -1,0 +1,1 @@
+Testid contract is clean. Final verification: full cold start (`down -v` → `up --build`).
