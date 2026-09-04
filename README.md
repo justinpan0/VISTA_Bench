@@ -112,9 +112,13 @@ CURSOR_BIN=~/.local/share/cursor-agent/versions/<ver>/cursor-agent ./run_eval_cu
 FILTER='*c4*' ./eval_all_runs.sh "$PWD/_runs_<config>"   # build + bring up + score each run dir → eval_summary.csv
 ```
 
+
 ## Trajectories
 
-The trajectories/ directory contains the recorded agent trajectories from benchmark runs. These files preserve the model-generated outputs produced during execution, such as intermediate reasoning or status messages exposed by the agent CLI, tool calls, code-generation steps, command outputs, and final responses.
+The `trajectories/` directory contains agent trajectories recorded during benchmark runs. These files preserve the model-generated outputs produced throughout execution, including intermediate reasoning or status messages exposed by the agent CLI, tool calls, code-generation steps, command outputs, and final responses.
+
+You can use `tasks/collect_trajectories.sh` to collect trajectories from your benchmark runs. Contributions are welcome—feel free to submit a merge request (MR) to upload and share your collected trajectories.
+
 
 ## Citation
 
